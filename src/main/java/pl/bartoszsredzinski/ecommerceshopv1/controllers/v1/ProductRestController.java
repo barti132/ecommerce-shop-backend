@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1.controllers;
+package pl.bartoszsredzinski.ecommerceshopv1.controllers.v1;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/product/")
+@RequestMapping("/api/v1/product/")
 public class ProductRestController{
 
     @GetMapping("{id}")
