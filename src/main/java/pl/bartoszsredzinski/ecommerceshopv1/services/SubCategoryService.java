@@ -1,44 +1,44 @@
 package pl.bartoszsredzinski.ecommerceshopv1.services;
 
 import org.springframework.stereotype.Service;
-import pl.bartoszsredzinski.ecommerceshopv1.model.Category;
-import pl.bartoszsredzinski.ecommerceshopv1.repositoreis.CategoryCrudRepository;
+import pl.bartoszsredzinski.ecommerceshopv1.model.SubCategory;
+import pl.bartoszsredzinski.ecommerceshopv1.repositoreis.SubCategoryCrudRepository;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class CategoryService implements CrudService<Category, Integer>{
+public class SubCategoryService implements CrudService<SubCategory, Integer>{
 
-    private final CategoryCrudRepository repository;
+    private final SubCategoryCrudRepository repository;
 
-    public CategoryService(CategoryCrudRepository repository){
+    public SubCategoryService(SubCategoryCrudRepository repository){
         this.repository = repository;
     }
 
     @Override
-    public List<Category> findAll(){
-        List<Category> list = new ArrayList<>();
+    public List<SubCategory> findAll(){
+        List<SubCategory> list = new ArrayList<>();
         repository.findAll().forEach(list::add);
         return list;
     }
 
-    public Category findByName(String name){
+    public SubCategory findByName(String name){
         return repository.findByName(name);
     }
 
     @Override
-    public Category findById(Integer id){
+    public SubCategory findById(Integer id){
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public Category save(Category object){
+    public SubCategory save(SubCategory object){
         return repository.save(object);
     }
 
     @Override
-    public void delete(Category object){
+    public void delete(SubCategory object){
         repository.delete(object);
     }
 

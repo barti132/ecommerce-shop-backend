@@ -6,4 +6,5 @@ import pl.bartoszsredzinski.ecommerceshopv1.model.SubCategory;
 
 @Repository
 public interface SubCategoryCrudRepository extends CrudRepository<SubCategory, Integer>{
+    SubCategory findByName(String name);
 }
