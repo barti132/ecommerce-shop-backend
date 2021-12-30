@@ -33,8 +33,8 @@ public class Product implements Serializable{
     @JoinColumn(name = "id_sub_category")
     private List<SubCategory> subCategories;
 
-    private char[] producer_name;
-    private char[] name;
+    private String producer_name;
+    private String name;
     private String description;
-    private char[] img;
+    private String img;
 }

@@ -34,9 +34,9 @@ public class SubCategory implements Serializable{
     private List<Product> products;
 
     @NotNull
-    private char[] name;
+    private String name;
 
     @NotNull
-    private char[] description;
+    private String description;
 
 }
