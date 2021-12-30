@@ -24,14 +24,14 @@ public class Category implements Serializable{
     private Integer id_category;
 
     @NotNull
-    private char[] name;
+    private String name;
 
     @NotNull
-    private char[] description;
+    private String description;
 
-    @OneToOne(mappedBy = "category")
-    private SubCategory subCategory;
+    @OneToMany(mappedBy = "category")
+    private List<SubCategory> subCategories;
 
-    @OneToOne(mappedBy = "category")
-    private Product product;
+    @ManyToMany(mappedBy = "categories")
+    private List<Product> products;
 }

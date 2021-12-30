@@ -6,4 +6,5 @@ import pl.bartoszsredzinski.ecommerceshopv1.model.Category;
 
 @Repository
 public interface CategoryCrudRepository extends CrudRepository<Category, Long>{
+    Category findByName(String name);
 }

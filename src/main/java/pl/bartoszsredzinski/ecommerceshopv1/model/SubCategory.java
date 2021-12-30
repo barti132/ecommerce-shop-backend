@@ -9,6 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table
@@ -23,14 +24,14 @@ public class SubCategory implements Serializable{
     private Integer id_sub_category;
 
     @NotNull
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "id_category")
     private Category category;
 
     @NotNull
-    @OneToOne
+    @ManyToMany
     @JoinColumn(name = "id_category")
-    private Product product;
+    private List<Product> products;
 
     @NotNull
     private char[] name;
