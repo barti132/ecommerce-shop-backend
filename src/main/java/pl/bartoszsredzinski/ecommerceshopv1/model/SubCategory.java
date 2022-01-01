@@ -9,10 +9,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
-@Table
+@Table(name = "Sub_category")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,19 +23,16 @@ public class SubCategory implements Serializable{
     private Integer id_sub_category;
 
     @NotNull
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_category")
     private Category category;
 
-    @NotNull
-    @ManyToMany
-    @JoinColumn(name = "id_category")
-    private List<Product> products;
-
-    @NotNull
+    @Column(length = 32)
     private String name;
 
     @NotNull
+    @Column(length = 128)
     private String description;
+
 
 }

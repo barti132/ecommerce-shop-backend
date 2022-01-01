@@ -9,10 +9,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
-@Table
+@Table(name = "Product")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -23,18 +22,26 @@ public class Product implements Serializable{
     @NotNull
     private Integer id_product;
 
-    @NotNull
-    @ManyToMany
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_category")
-    private List<Category> categories;
+    private Category category;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_sub_category")
+    private SubCategory subCategory;
 
     @NotNull
-    @ManyToMany
-    @JoinColumn(name = "id_sub_category")
-    private List<SubCategory> subCategories;
-
+    @Column(length = 64)
     private String producer_name;
+
+    @NotNull
+    @Column(length = 32)
     private String name;
+
+    @NotNull
     private String description;
+
+    @NotNull
+    @Column(length = 128)
     private String img;
 }

@@ -8,10 +8,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
-@Table
+@Table(name = "Category")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -24,14 +23,11 @@ public class Category implements Serializable{
     private Integer id_category;
 
     @NotNull
+    @Column(length = 32)
     private String name;
 
     @NotNull
+    @Column(length = 128)
     private String description;
 
-    @OneToMany(mappedBy = "category")
-    private List<SubCategory> subCategories;
-
-    @ManyToMany(mappedBy = "categories")
-    private List<Product> products;
 }
