@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "Product")
+@Table(name = "product")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -22,13 +22,13 @@ public class Product implements Serializable{
     @NotNull
     private Integer id_product;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_category")
-    private Category category;
+    @NotNull
+    @Column(length = 128)
+    private String category;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_sub_category")
-    private SubCategory subCategory;
+    @NotNull
+    @Column(length = 128)
+    private String sub_category;
 
     @NotNull
     @Column(length = 64)

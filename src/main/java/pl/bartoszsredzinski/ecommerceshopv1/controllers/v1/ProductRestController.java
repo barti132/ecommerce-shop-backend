@@ -5,23 +5,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
-import pl.bartoszsredzinski.ecommerceshopv1.model.SubCategory;
-import pl.bartoszsredzinski.ecommerceshopv1.services.CategoryService;
 import pl.bartoszsredzinski.ecommerceshopv1.services.ProductService;
-import pl.bartoszsredzinski.ecommerceshopv1.services.SubCategoryService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/product/")
 public class ProductRestController{
 
     private final ProductService productService;
-    private final CategoryService categoryService;
-    private final SubCategoryService subCategoryService;
 
-    public ProductRestController(ProductService productService, CategoryService categoryService, SubCategoryService subCategoryService){
+    public ProductRestController(ProductService productService){
         this.productService = productService;
-        this.categoryService = categoryService;
-        this.subCategoryService = subCategoryService;
     }
 
     @GetMapping("{id}")
@@ -29,4 +24,8 @@ public class ProductRestController{
         return productService.findById(id);
     }
 
+    @GetMapping("all")
+    public List<Product> getAllProduct(){
+        return productService.findAll();
+    }
 }
