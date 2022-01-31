@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1;
+package pl.bartoszsredzinski.ecommerceshopv1.config;
 
 import org.h2.tools.Server;
 import org.springframework.context.annotation.Bean;

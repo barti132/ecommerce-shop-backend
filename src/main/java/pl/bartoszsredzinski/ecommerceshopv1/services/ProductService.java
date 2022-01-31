@@ -46,10 +46,12 @@ public class ProductService implements CrudService<Product, Integer>{
         repository.deleteById(id);
     }
 
-    public List<Product> findByCriteria(String name, String category, String subcategory){
+    public List<Product> findByCriteria(String name, String category){
         ProductSpecification spec1 = new ProductSpecification(new SearchCriteria("name", ":", name));
         ProductSpecification spec2 = new ProductSpecification(new SearchCriteria("category", ":", category));
-        ProductSpecification spec3 = new ProductSpecification(new SearchCriteria("sub_category", ":", subcategory));
-        return repository.findAll(Specification.where(spec1).and(spec2).and(spec3));
+        if(category.equals("any")){
+            return repository.findAll(Specification.where(spec1));
+        }
+        return repository.findAll(Specification.where(spec1).and(spec2));
     }
 }

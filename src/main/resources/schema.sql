@@ -39,7 +39,6 @@ CREATE TABLE client(
                        login VARCHAR(32) NOT NULL,
                        password VARCHAR(32) NOT NULL,
                        name VARCHAR(32) NOT NULL,
-                       middle_name VARCHAR(32),
                        last_name VARCHAR(32) NOT NULL,
                        is_active TINYINT NOT NULL,
                        is_admin TINYINT NOT NULL,
