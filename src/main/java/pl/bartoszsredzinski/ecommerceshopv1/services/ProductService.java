@@ -7,10 +7,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.repositoreis.ProductJpaRepository;
 import pl.bartoszsredzinski.ecommerceshopv1.specifications.ProductSpecification;
 import pl.bartoszsredzinski.ecommerceshopv1.specifications.SearchCriteria;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service
 public class ProductService implements CrudService<Product, Integer>{

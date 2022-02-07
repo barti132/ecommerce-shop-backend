@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
 import pl.bartoszsredzinski.ecommerceshopv1.services.ProductService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j

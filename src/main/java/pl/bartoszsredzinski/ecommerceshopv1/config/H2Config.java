@@ -6,9 +6,16 @@ import org.springframework.context.annotation.Configuration;
 
 import java.sql.SQLException;
 
+/**
+ * @author Bartosz Średziński
+ */
 @Configuration
 public class H2Config{
 
+    /**
+     * @return Server h2Server
+     * @throws SQLException
+     */
     @Bean(initMethod = "start", destroyMethod = "stop")
     public Server h2Server() throws SQLException{
         return Server.createTcpServer("-tcp");

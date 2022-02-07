@@ -12,6 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.File;
 import java.io.IOException;
 
+/**
+ * This controller class handle image request.
+ *
+ * @author Bartosz Średziński
+ */
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/image")
@@ -19,14 +24,20 @@ public class ImageRestController{
 
     private String FILE_PATH_ROOT = "C:\\workspaceIntellij\\ecommerceshopv1\\src\\main\\resources\\images\\";
 
+    /**
+     * This endpoint return an image from FILE_PATH_ROOT folder
+     * @param filename image file name
+     * @return ResponseEntity<byte[]>  with code 200 if success or 500 if there was an exception
+     */
     @GetMapping("/{filename}")
     public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename){
-        log.info("GET /" + filename);
+        log.info("GET image/" + filename);
         byte[] image = new byte[0];
         try{
             image = FileUtils.readFileToByteArray(new File(FILE_PATH_ROOT + filename));
         }catch(IOException e){
             e.printStackTrace();
+            return ResponseEntity.status(500).body(image);
         }
         return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(image);
     }
