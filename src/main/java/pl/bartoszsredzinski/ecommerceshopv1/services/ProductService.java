@@ -44,11 +44,20 @@ public class ProductService implements CrudService<Product, Integer>{
     }
 
     public List<Product> findByCriteria(String name, String category){
+
+        if(category.equals("any")) {
+            return repository.findAllByNameContainsIgnoreCase(name);
+        }
+        else{
+            return repository.findAllByNameContainsIgnoreCaseAndCategoryContainsIgnoreCase(name, category);
+        }
+
+        /*
         ProductSpecification spec1 = new ProductSpecification(new SearchCriteria("name", ":", name));
         ProductSpecification spec2 = new ProductSpecification(new SearchCriteria("category", ":", category));
         if(category.equals("any")){
             return repository.findAll(Specification.where(spec1));
         }
-        return repository.findAll(Specification.where(spec1).and(spec2));
+        return repository.findAll(Specification.where(spec1).and(spec2));*/
     }
 }
