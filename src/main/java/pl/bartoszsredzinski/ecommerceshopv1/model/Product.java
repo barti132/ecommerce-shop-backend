@@ -10,6 +10,11 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * @author Bartosz Średziński
+ *
+ * This class is representation of product model.
+ */
 @Entity
 @Table(name = "product")
 @Getter

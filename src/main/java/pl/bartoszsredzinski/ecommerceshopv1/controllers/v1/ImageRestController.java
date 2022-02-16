@@ -20,22 +20,26 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/image")
-public class ImageRestController{
+public class ImageRestController {
 
     private String FILE_PATH_ROOT = "C:\\workspaceIntellij\\ecommerceshopv1\\src\\main\\resources\\images\\";
 
     /**
-     * This endpoint return an image from FILE_PATH_ROOT folder
+     * GET /api/v1/image/{filename}
+     * <p>
+     *  This endpoint return an image from FILE_PATH_ROOT folder
+     * </p>
+     *
      * @param filename image file name
-     * @return ResponseEntity<byte[]>  with code 200 if success or 500 if there was an exception
+     * @return ResponseEntity<byte [ ]>  with code 200 if success or 500 if there was an exception
      */
     @GetMapping("/{filename}")
-    public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename){
+    public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename) {
         log.info("GET image/" + filename);
         byte[] image = new byte[0];
-        try{
+        try {
             image = FileUtils.readFileToByteArray(new File(FILE_PATH_ROOT + filename));
-        }catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body(image);
         }

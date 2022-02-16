@@ -9,14 +9,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * @author Bartosz Średziński
  *
- * <h1>Description:</h1>
- * <p>
- *     This configuration class allows cors request from localhost:4200 - production config
- * </p>
+ * This configuration class allows cors request from localhost:4200 - production config
  */
 @Configuration
 public class corsConfig{
 
+
+    /**
+     * @return WebMvcConfigurer - config with added mapping for localhost
+     */
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
