@@ -90,7 +90,7 @@ class ProductServiceTest {
 
     @Test
     @Order(5)
-    public void getRandom_should_throw_excpection(){
+    public void getRandom_should_throw_exception(){
         assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(3));
         assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(0));
     }
