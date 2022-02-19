@@ -4,54 +4,72 @@ import org.springframework.stereotype.Service;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
 import pl.bartoszsredzinski.ecommerceshopv1.repositoreis.ProductJpaRepository;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Service - working on ProductJpaRepository
  * Implements interface CrudService with Product as repository class & Integer as id
  *
- * @see pl.bartoszsredzinski.ecommerceshopv1.services.CrudService
  * @author Bartosz Średziński
+ * @see pl.bartoszsredzinski.ecommerceshopv1.services.CrudService
  */
 @Service
-public class ProductService implements CrudService<Product, Integer> {
+public class ProductService implements CrudService<Product, Integer>{
 
     private final ProductJpaRepository repository;
 
-    public ProductService(ProductJpaRepository repository) {
+    public ProductService(ProductJpaRepository repository){
         this.repository = repository;
     }
 
     @Override
-    public List<Product> findAll() {
+    public List<Product> findAll(){
         return repository.findAll();
     }
 
     @Override
-    public Product findById(Integer id) {
+    public Product findById(Integer id){
         return repository.findById(id).orElse(null);
     }
 
     @Override
-    public Product save(Product object) {
+    public Product save(Product object){
         return repository.save(object);
     }
 
     @Override
-    public void delete(Product object) {
+    public void delete(Product object){
         repository.delete(object);
     }
 
     @Override
-    public void deleteById(Integer id) {
+    public void deleteById(Integer id){
         repository.deleteById(id);
     }
 
-    public List<Product> findByCriteria(String name, String category) {
-        if (category.equals("any")) {
+    public List<Product> findByCriteria(String name, String category){
+        if(category.equals("any")){
             return repository.findAllByNameContainsIgnoreCase(name);
-        } else {
+        }
+        else{
             return repository.findAllByNameContainsIgnoreCaseAndCategoryContainsIgnoreCase(name, category);
         }
+    }
+
+    public List<Product> getRandomProducts(Integer limit) throws ArrayIndexOutOfBoundsException{
+        int productsNumber = (int) repository.count();
+
+        if(productsNumber < limit){
+            throw new ArrayIndexOutOfBoundsException("Limit is bigger than database size.");
+        }
+
+        Random random = new Random();
+        Set<Product> randomProducts = new LinkedHashSet<>();
+
+        while(randomProducts.size() != limit){
+            randomProducts.add(findById(random.nextInt(productsNumber - 1) + 1));
+        }
+
+        return new ArrayList<>(randomProducts);
     }
 }

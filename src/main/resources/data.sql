@@ -75,7 +75,7 @@ VALUES ('Laptops & PCs', 'Laptops', 'Ovonel 1', 'Laptop 1', 'New fast laptop fro
         'http://localhost:8080/api/v1/image/laptop2.jpg'),
        ('Gaming & streaming', 'Gaming laptops', 'Ovonel', 'Gaming laptop 7',
         'Sed luctus, leo vel fringilla volutpat, libero ipsum fringilla leo, non congue mi.',
-        'http://localhost:8080/api/v1/image/harddisk1.jpg'),
+        'http://localhost:8080/api/v1/image/laptop1.jpg'),
        ('Computer components', 'Hard discs', 'DW Disc', 'HDD 1', 'Lorem ipsum dolor sit amet',
         'http://localhost:8080/api/v1/image/harddisk2.jpg'),
        ('Computer components', 'Hard discs', 'DW Disc', 'HDD 2', 'Lorem ipsum dolor sit amet',
