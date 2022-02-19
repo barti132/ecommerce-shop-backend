@@ -6,8 +6,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,17 +46,16 @@ class ProductServiceTest {
 
     @Test
     @Order(1)
-    public void should_findAll(){
+    public void findAll_should_work(){
         List<Product> findResult = productService.findAll();
-        assertTrue(findResult.size() == 2);
+        assertEquals(2, findResult.size());
         assertEquals(findResult.get(0).getName(), product1.getName());
         assertEquals(findResult.get(1).getName(), product2.getName());
     }
 
     @Test
     @Order(2)
-    public void should_findById(){
-        System.out.println(productService.findAll().size());
+    public void findById_should_work(){
         //sql counting from 1
         Product prod1 = productService.findById(1);
         assertEquals(prod1.getName(), product1.getName());
@@ -77,7 +74,7 @@ class ProductServiceTest {
 
     @Test
     @Order(4)
-    public void should_findByCriteria(){
+    public void findByCriteria_should_work(){
         List<Product> list = productService.findByCriteria("Special", "any");
         assertEquals(list.size(), 2);
 
@@ -93,14 +90,28 @@ class ProductServiceTest {
 
     @Test
     @Order(5)
-    public void should_delete(){
+    public void getRandom_should_throw_excpection(){
+        assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(3));
+        assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(0));
+    }
+
+    @Test
+    @Order(6)
+    public void getRandom_should_work(){
+        List<Product>list = productService.getRandomProducts(2);
+        assertEquals(list.size(), 2);
+    }
+
+    @Test
+    @Order(7)
+    public void delete_should_work(){
         productService.delete(product1);
         assertEquals(1, productService.findAll().size());
     }
 
     @Test
-    @Order(6)
-    public void should_deleteById(){
+    @Order(8)
+    public void deleteById_should_work(){
         productService.deleteById(2);
         assertEquals(0, productService.findAll().size());
     }

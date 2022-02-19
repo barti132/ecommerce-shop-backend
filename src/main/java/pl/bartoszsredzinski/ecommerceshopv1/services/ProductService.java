@@ -59,8 +59,8 @@ public class ProductService implements CrudService<Product, Integer>{
     public List<Product> getRandomProducts(Integer limit) throws ArrayIndexOutOfBoundsException{
         int productsNumber = (int) repository.count();
 
-        if(productsNumber < limit){
-            throw new ArrayIndexOutOfBoundsException("Limit is bigger than database size.");
+        if(productsNumber < limit || limit < 1){
+            throw new ArrayIndexOutOfBoundsException("Limit wrong size.");
         }
 
         Random random = new Random();
