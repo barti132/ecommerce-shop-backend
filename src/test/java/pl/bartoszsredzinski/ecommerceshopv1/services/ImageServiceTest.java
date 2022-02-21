@@ -11,7 +11,7 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Class description
+ * ImageService test class
  *
  * @author Bartosz Średziński
  * created on 19.02.2022

@@ -26,7 +26,6 @@ class ProductServiceTest {
     void init() {
         product1 = new Product();
         product1.setCategory("category1");
-        product1.setSub_category("sub_category1");
         product1.setProducer_name("producer1");
         product1.setName("Special product");
         product1.setDescription("");
@@ -34,7 +33,6 @@ class ProductServiceTest {
 
         product2 = new Product();
         product2.setCategory("category2");
-        product2.setSub_category("sub_category2");
         product2.setProducer_name("producer2");
         product2.setName("Special product but another");
         product2.setDescription("");

@@ -3,37 +3,32 @@ package pl.bartoszsredzinski.ecommerceshopv1.model;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * @author Bartosz Średziński
- *
+ * <p>
  * This class is representation of product model.
  */
 @Entity
 @Table(name = "product")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
-    private Integer id_product;
+    private Integer id;
 
     @NotNull
     @Column(length = 128)
     private String category;
-
-    @NotNull
-    @Column(length = 128)
-    private String sub_category;
 
     @NotNull
     @Column(length = 64)
@@ -49,4 +44,10 @@ public class Product implements Serializable{
     @NotNull
     @Column(length = 128)
     private String img;
+
+    @NotNull
+    private BigDecimal price_net;
+
+    @NotNull
+    private BigDecimal price_gross;
 }
