@@ -3,6 +3,7 @@ package pl.bartoszsredzinski.ecommerceshopv1.model;
 
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "product")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Product implements Serializable{

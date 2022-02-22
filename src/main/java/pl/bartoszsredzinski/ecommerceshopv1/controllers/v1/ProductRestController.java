@@ -34,7 +34,7 @@ public class ProductRestController{
      * </p>
      *
      * @param id Integer - product id
-     * @return Product or null  with code 200
+     * @return Product or null
      */
     @GetMapping("product/{id}")
     public Product getProductById(@PathVariable Integer id){
@@ -85,5 +85,22 @@ public class ProductRestController{
         }catch(ArrayIndexOutOfBoundsException e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
+    }
+
+    /**
+     * GET /api/v1/products/category/{category}
+     *
+     * <p>
+     *     Endpoint return list of products with given category.
+     * </p>
+     *
+     * @param category String category name
+     * @return List<Product> list of products with given category
+     */
+    @GetMapping("products/category/{category}")
+    public List<Product> getProductsByCategory(@PathVariable String category){
+        log.info("GET products/category/{category}");
+
+        return productService.getProductsByCategory(category);
     }
 }
