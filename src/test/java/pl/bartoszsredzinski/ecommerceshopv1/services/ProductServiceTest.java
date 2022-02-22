@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,19 +25,23 @@ class ProductServiceTest {
 
     @BeforeAll
     void init() {
-        product1 = new Product();
-        product1.setCategory("category1");
-        product1.setProducer_name("producer1");
-        product1.setName("Special product");
-        product1.setDescription("");
-        product1.setImg("");
+        product1 = Product.builder()
+                .category("category1")
+                .producer_name("producer1")
+                .name("Special product")
+                .description("")
+                .img("")
+                .price_net(new BigDecimal(0))
+                .price_gross(new BigDecimal(0)).build();
 
-        product2 = new Product();
-        product2.setCategory("category2");
-        product2.setProducer_name("producer2");
-        product2.setName("Special product but another");
-        product2.setDescription("");
-        product2.setImg("");
+        product2 = Product.builder()
+                .category("category2")
+                .producer_name("producer2")
+                .name("Special product but another")
+                .description("")
+                .img("")
+                .price_net(new BigDecimal(0))
+                .price_gross(new BigDecimal(0)).build();
 
         productService.save(product1);
         productService.save(product2);
@@ -74,16 +79,16 @@ class ProductServiceTest {
     @Order(4)
     public void findByCriteria_should_work(){
         List<Product> list = productService.findByCriteria("Special", "any");
-        assertEquals(list.size(), 2);
+        assertEquals(2, list.size());
 
         list = productService.findByCriteria("", "any");
-        assertEquals(list.size(), 2);
+        assertEquals(2, list.size());
 
         list = productService.findByCriteria("another", "any");
-        assertEquals(list.size(), 1);
+        assertEquals(1, list.size());
 
         list = productService.findByCriteria("", "category1");
-        assertEquals(list.size(), 1);
+        assertEquals(1, list.size());
     }
 
     @Test
@@ -96,19 +101,26 @@ class ProductServiceTest {
     @Test
     @Order(6)
     public void getRandom_should_work(){
-        List<Product>list = productService.getRandomProducts(2);
-        assertEquals(list.size(), 2);
+        assertEquals(2, productService.getRandomProducts(2).size());
     }
 
     @Test
     @Order(7)
+    public void getByCategory_should_work(){
+        assertEquals(1, productService.getProductsByCategory("category1").size());
+        assertEquals(1, productService.getProductsByCategory("category2").size());
+        assertEquals(0, productService.getProductsByCategory("category3").size());
+    }
+
+    @Test
+    @Order(8)
     public void delete_should_work(){
         productService.delete(product1);
         assertEquals(1, productService.findAll().size());
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     public void deleteById_should_work(){
         productService.deleteById(2);
         assertEquals(0, productService.findAll().size());
