@@ -1,8 +1,11 @@
 package pl.bartoszsredzinski.ecommerceshopv1.config;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  * Configuration of spring security.
@@ -23,5 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.csrf().disable();
         http.headers().frameOptions().disable();
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

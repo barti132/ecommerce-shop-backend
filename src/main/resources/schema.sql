@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS Product;
 DROP TABLE IF EXISTS Wishlist;
 DROP TABLE IF EXISTS Cart;
 DROP TABLE IF EXISTS Invoice;
+DROP TABLE IF EXISTS token;
 DROP TABLE IF EXISTS user_adresses;
 DROP TABLE IF EXISTS User;
 DROP TABLE IF EXISTS Address;
@@ -43,7 +44,17 @@ CREATE TABLE user
     name         VARCHAR(32)  NOT NULL,
     last_name    VARCHAR(32)  NOT NULL,
     role         VARCHAR(255) NOT NULL,
+    enabled      BOOLEAN      NOT NULL,
     FOREIGN KEY (id_address) REFERENCES address (id)
+);
+
+CREATE TABLE token
+(
+    id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    token      VARCHAR(255) NOT NULL,
+    id_user    INT          ,
+    expiryDate DATE         ,
+    FOREIGN KEY (id_user) REFERENCES user (id)
 );
 
 CREATE TABLE wishlist

@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
 
@@ -33,14 +34,17 @@ public class User implements Serializable{
     private String phoneNumber;
 
     @NotNull
+    @NotBlank(message = "Email is required")
     @Column(length = 64)
     private String email;
 
     @NotNull
+    @NotBlank(message = "Login is required")
     @Column(length = 64)
     private String login;
 
     @NotNull
+    @NotBlank(message = "Password is required")
     private String password;
 
     @NotNull
@@ -57,5 +61,8 @@ public class User implements Serializable{
     @OneToMany
     @JoinTable(name="user_adresses")
     private List<Address> Addresses;
+
+    @NotNull
+    private boolean enabled;
 
 }
