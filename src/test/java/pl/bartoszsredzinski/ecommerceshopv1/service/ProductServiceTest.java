@@ -3,6 +3,7 @@ package pl.bartoszsredzinski.ecommerceshopv1.service;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
 
@@ -13,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @ActiveProfiles("test")
 class ProductServiceTest {
 
@@ -23,7 +24,7 @@ class ProductServiceTest {
     private Product product1;
     private Product product2;
 
-    @BeforeAll
+    @BeforeEach
     void init() {
         product1 = Product.builder()
                 .category("category1")
@@ -48,7 +49,13 @@ class ProductServiceTest {
     }
 
     @Test
-    @Order(1)
+    public void getProducersByCategory_should_work(){
+        List<String> results = productService.getProducersByCategory("category2");
+        assertEquals(1, results.size());
+        assertEquals("producer2", results.get(0));
+    }
+
+    @Test
     public void findAll_should_work(){
         List<Product> findResult = productService.findAll();
         assertEquals(2, findResult.size());
@@ -57,7 +64,6 @@ class ProductServiceTest {
     }
 
     @Test
-    @Order(2)
     public void findById_should_work(){
         //sql counting from 1
         Product prod1 = productService.findById(1);
@@ -67,7 +73,6 @@ class ProductServiceTest {
     }
 
     @Test
-    @Order(3)
     public void findById_should_be_null(){
         Product prod1 = productService.findById(0);
         assertNull(prod1);
@@ -76,7 +81,6 @@ class ProductServiceTest {
     }
 
     @Test
-    @Order(4)
     public void findByCriteria_should_work(){
         List<Product> list = productService.findByCriteria("Special", "any");
         assertEquals(2, list.size());
@@ -92,20 +96,17 @@ class ProductServiceTest {
     }
 
     @Test
-    @Order(5)
     public void getRandom_should_throw_exception(){
         assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(3));
         assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(0));
     }
 
     @Test
-    @Order(6)
     public void getRandom_should_work(){
         assertEquals(2, productService.getRandomProducts(2).size());
     }
 
     @Test
-    @Order(7)
     public void getByCategory_should_work(){
         assertEquals(1, productService.getProductsByCategory("category1").size());
         assertEquals(1, productService.getProductsByCategory("category2").size());
@@ -113,16 +114,15 @@ class ProductServiceTest {
     }
 
     @Test
-    @Order(8)
     public void delete_should_work(){
         productService.delete(product1);
         assertEquals(1, productService.findAll().size());
     }
 
     @Test
-    @Order(9)
     public void deleteById_should_work(){
-        productService.deleteById(2);
-        assertEquals(0, productService.findAll().size());
+        Integer id = productService.findAll().get(0).getId();
+        productService.deleteById(id);
+        assertEquals(1, productService.findAll().size());
     }
 }
