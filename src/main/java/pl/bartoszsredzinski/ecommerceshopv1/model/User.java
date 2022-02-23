@@ -55,6 +55,7 @@ public class User implements Serializable{
     private String role;
 
     @OneToMany
+    @JoinTable(name="user_adresses")
     private List<Address> Addresses;
 
 }

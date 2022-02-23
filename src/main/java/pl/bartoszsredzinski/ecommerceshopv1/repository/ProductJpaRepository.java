@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1.repositoreis;
+package pl.bartoszsredzinski.ecommerceshopv1.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

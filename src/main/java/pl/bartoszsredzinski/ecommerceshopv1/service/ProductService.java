@@ -1,8 +1,8 @@
-package pl.bartoszsredzinski.ecommerceshopv1.services;
+package pl.bartoszsredzinski.ecommerceshopv1.service;
 
 import org.springframework.stereotype.Service;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
-import pl.bartoszsredzinski.ecommerceshopv1.repositoreis.ProductJpaRepository;
+import pl.bartoszsredzinski.ecommerceshopv1.repository.ProductJpaRepository;
 
 import java.util.*;
 
@@ -11,7 +11,7 @@ import java.util.*;
  * Implements interface CrudService with Product as repository class & Integer as id
  *
  * @author Bartosz Średziński
- * @see pl.bartoszsredzinski.ecommerceshopv1.services.CrudService
+ * @see pl.bartoszsredzinski.ecommerceshopv1.service.CrudService
  */
 @Service
 public class ProductService implements CrudService<Product, Integer>{

@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1.services;
+package pl.bartoszsredzinski.ecommerceshopv1.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

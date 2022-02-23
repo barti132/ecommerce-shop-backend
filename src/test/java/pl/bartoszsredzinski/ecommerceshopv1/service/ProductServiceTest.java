@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1.services;
+package pl.bartoszsredzinski.ecommerceshopv1.service;
 
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,11 +1,11 @@
-package pl.bartoszsredzinski.ecommerceshopv1.controllers.v1;
+package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
-import pl.bartoszsredzinski.ecommerceshopv1.services.ProductService;
+import pl.bartoszsredzinski.ecommerceshopv1.service.ProductService;
 
 import java.util.List;
 import java.util.Objects;
@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/")
+@RequestMapping("/api/v1/products/")
 public class ProductRestController{
 
     private final ProductService productService;
@@ -28,7 +28,7 @@ public class ProductRestController{
 
 
     /**
-     * GET /api/v1/product/{id}
+     * GET /api/v1/products/{id}
      * <p>
      * This endpoint return a product with given id
      * </p>
@@ -36,14 +36,14 @@ public class ProductRestController{
      * @param id Integer - product id
      * @return Product or null
      */
-    @GetMapping("product/{id}")
+    @GetMapping("{id}")
     public Product getProductById(@PathVariable Integer id){
         log.info("GET product/" + id);
         return productService.findById(id);
     }
 
     /**
-     * GET /api/v1/products
+     * GET /api/v1/products/search
      * OPTIONAL parameters ?name=""&category=""
      * <p>
      * This endpoint is searching for a products with given criteria
@@ -53,7 +53,7 @@ public class ProductRestController{
      * @param category String - searching product category
      * @return List<Product> with 200 code
      */
-    @GetMapping("products")
+    @GetMapping("search")
     public List<Product> findProduct(@RequestParam(required = false) String name, @RequestParam(required = false) String category){
 
         log.info("GET products?name=" + name + "&category=" + category);
@@ -76,7 +76,7 @@ public class ProductRestController{
      * @param limit Integer size of list
      * @return List<Product> list of random products
      */
-    @GetMapping("products/random")
+    @GetMapping("random")
     public List<Product> getRandomProducts(@RequestParam(required = false) Integer limit){
         log.info("GET products/random?limit=" + limit);
 
@@ -97,14 +97,14 @@ public class ProductRestController{
      * @param category String category name
      * @return List<Product> list of products with given category
      */
-    @GetMapping("products/category/{category}")
+    @GetMapping("category/{category}")
     public List<Product> getProductsByCategory(@PathVariable String category){
         log.info("GET products/category/" + category);
 
         return productService.getProductsByCategory(category);
     }
 
-    @GetMapping("products/{category}/producers")
+    @GetMapping("{category}/producers")
     public List<String> getProducersByCategory(@PathVariable String category){
         log.info("GET products/" + category + "/producers");
         return productService.getProducersByCategory(category);

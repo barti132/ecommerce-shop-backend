@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1.services;
+package pl.bartoszsredzinski.ecommerceshopv1.service;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
