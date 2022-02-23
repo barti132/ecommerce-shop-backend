@@ -1,6 +1,5 @@
 package pl.bartoszsredzinski.ecommerceshopv1.model;
 
-
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,20 +8,21 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 /**
- * This class is representation of product model.
+ * This class is representation of address model.
  *
  * @author Bartosz Średziński
+ * created on 22.02.2022
  */
+
 @Entity
-@Table(name = "product")
+@Table(name = "address")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product implements Serializable{
+public class Address implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
@@ -30,26 +30,17 @@ public class Product implements Serializable{
 
     @NotNull
     @Column(length = 128)
-    private String category;
-
-    @NotNull
-    @Column(length = 64)
-    private String producer_name;
-
-    @NotNull
-    @Column(length = 32)
-    private String name;
-
-    @NotNull
-    private String description;
+    private String address;
 
     @NotNull
     @Column(length = 128)
-    private String img;
+    private String city;
 
     @NotNull
-    private BigDecimal price_net;
+    @Column(length = 128)
+    private String country;
 
     @NotNull
-    private BigDecimal price_gross;
+    @Column(length = 16)
+    private String postal_code;
 }

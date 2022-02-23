@@ -14,11 +14,11 @@ DROP TABLE IF EXISTS Mail;
 
 CREATE TABLE product
 (
-    id            INT            NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    category      VARCHAR(128)   NOT NULL,
-    producer_name VARCHAR(64)    NOT NULL,
-    name          VARCHAR(32)    NOT NULL,
-    description   TEXT           NOT NULL,
+    id            INT           NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    category      VARCHAR(128)  NOT NULL,
+    producer_name VARCHAR(64)   NOT NULL,
+    name          VARCHAR(32)   NOT NULL,
+    description   TEXT          NOT NULL,
     img           VARCHAR(128),
     price_net     NUMERIC(9, 2) NOT NULL,
     price_gross   NUMERIC(9, 2) NOT NULL
@@ -26,42 +26,42 @@ CREATE TABLE product
 
 CREATE TABLE address
 (
-    id              INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    address         VARCHAR(128) NOT NULL,
-    city            VARCHAR(128) NOT NULL,
-    country         VARCHAR(128) NOT NULL,
-    postal_code     VARCHAR(16)  NOT NULL
+    id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    address     VARCHAR(128) NOT NULL,
+    city        VARCHAR(128) NOT NULL,
+    country     VARCHAR(128) NOT NULL,
+    postal_code VARCHAR(16)  NOT NULL
 );
 
-CREATE TABLE client
+CREATE TABLE user
 (
-    id           INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_address   INT         NOT NULL,
+    id           INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_address   INT,
     phone_number VARCHAR(16),
-    email        VARCHAR(64) NOT NULL,
-    login        VARCHAR(32) NOT NULL,
-    password     VARCHAR(32) NOT NULL,
-    name         VARCHAR(32) NOT NULL,
-    last_name    VARCHAR(32) NOT NULL,
-    role VARCHAR(128) NOT NULL,
+    email        VARCHAR(64)  NOT NULL,
+    login        VARCHAR(64)  NOT NULL,
+    password     VARCHAR(255) NOT NULL,
+    name         VARCHAR(32)  NOT NULL,
+    last_name    VARCHAR(32)  NOT NULL,
+    role         VARCHAR(255) NOT NULL,
     FOREIGN KEY (id_address) REFERENCES address (id)
 );
 
 CREATE TABLE wishlist
 (
     id           INT         NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_client    INT         NOT NULL,
+    id_user      INT         NOT NULL,
     name         VARCHAR(32) NOT NULL,
     created_DATE DATE        NOT NULL,
-    FOREIGN KEY (id_client) REFERENCES client (id)
+    FOREIGN KEY (id_user) REFERENCES user (id)
 );
 
 CREATE TABLE wishlist_item
 (
-    id          INT           NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_wishlist INT           NOT NULL,
-    id_product  INT           NOT NULL,
-    quantity    INT           NOT NULL,
+    id          INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_wishlist INT NOT NULL,
+    id_product  INT NOT NULL,
+    quantity    INT NOT NULL,
     FOREIGN KEY (id_wishlist) REFERENCES wishlist (id),
     FOREIGN KEY (id_product) REFERENCES product (id)
 );
@@ -69,17 +69,17 @@ CREATE TABLE wishlist_item
 CREATE TABLE cart
 (
     id          INT  NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_client   INT  NOT NULL,
+    id_user     INT  NOT NULL,
     upDATE_DATE DATE NOT NULL,
-    FOREIGN KEY (id_client) REFERENCES client (id)
+    FOREIGN KEY (id_user) REFERENCES user (id)
 );
 
 CREATE TABLE cart_item
 (
-    id         INT           NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_cart    INT           NOT NULL,
-    id_product INT           NOT NULL,
-    quantity   INT           NOT NULL,
+    id         INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id_cart    INT NOT NULL,
+    id_product INT NOT NULL,
+    quantity   INT NOT NULL,
     FOREIGN KEY (id_cart) REFERENCES cart (id),
     FOREIGN KEY (id_product) REFERENCES product (id)
 );
@@ -87,12 +87,12 @@ CREATE TABLE cart_item
 CREATE TABLE opinion
 (
     id           INT     NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_client    INT     NOT NULL,
+    id_user      INT     NOT NULL,
     id_product   INT     NOT NULL,
     opinion      TEXT,
     rate         TINYINT NOT NULL,
     opinion_DATE DATE    NOT NULL,
-    FOREIGN KEY (id_client) REFERENCES client (id),
+    FOREIGN KEY (id_user) REFERENCES user (id),
     FOREIGN KEY (id_product) REFERENCES product (id)
 );
 
@@ -109,14 +109,14 @@ CREATE TABLE seller_products
 CREATE TABLE invoice
 (
     id                      INT           NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    id_client               INT           NOT NULL,
+    id_user                 INT           NOT NULL,
     order_DATE              DATE          NOT NULL,
     order_total_price_net   DECIMAL(9, 2) NOT NULL,
     order_total_price_gorss DECIMAL(9, 2) NOT NULL,
     payment_method          VARCHAR(32)   NOT NULL,
     document_type           VARCHAR(64)   NOT NULL,
     additional_info         VARCHAR(256),
-    FOREIGN KEY (id_client) REFERENCES client (id)
+    FOREIGN KEY (id_user) REFERENCES user (id)
 );
 
 CREATE TABLE invoice_items

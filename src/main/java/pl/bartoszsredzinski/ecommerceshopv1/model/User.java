@@ -1,6 +1,5 @@
 package pl.bartoszsredzinski.ecommerceshopv1.model;
 
-
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,47 +8,53 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.List;
 
 /**
- * This class is representation of product model.
+ * This class is representation of user model.
  *
  * @author Bartosz Średziński
+ * created on 22.02.2022
  */
+
 @Entity
-@Table(name = "product")
+@Table(name = "user")
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Product implements Serializable{
+public class User implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @NotNull
     private Integer id;
 
-    @NotNull
-    @Column(length = 128)
-    private String category;
+    @Column(length = 16)
+    private String phoneNumber;
 
     @NotNull
     @Column(length = 64)
-    private String producer_name;
+    private String email;
+
+    @NotNull
+    @Column(length = 64)
+    private String login;
+
+    @NotNull
+    private String password;
 
     @NotNull
     @Column(length = 32)
     private String name;
 
     @NotNull
-    private String description;
+    @Column(length = 32)
+    private String lastName;
 
     @NotNull
-    @Column(length = 128)
-    private String img;
+    private String role;
 
-    @NotNull
-    private BigDecimal price_net;
+    @OneToMany
+    private List<Address> Addresses;
 
-    @NotNull
-    private BigDecimal price_gross;
 }

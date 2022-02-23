@@ -99,8 +99,14 @@ public class ProductRestController{
      */
     @GetMapping("products/category/{category}")
     public List<Product> getProductsByCategory(@PathVariable String category){
-        log.info("GET products/category/{category}");
+        log.info("GET products/category/" + category);
 
         return productService.getProductsByCategory(category);
+    }
+
+    @GetMapping("products/{category}/producers")
+    public List<String> getProducersByCategory(@PathVariable String category){
+        log.info("GET products/" + category + "/producers");
+        return productService.getProducersByCategory(category);
     }
 }

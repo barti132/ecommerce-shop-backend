@@ -76,4 +76,8 @@ public class ProductService implements CrudService<Product, Integer>{
     public List<Product> getProductsByCategory(String category){
         return repository.findAllByCategory(category);
     }
+
+    public List<String> getProducersByCategory(String category){
+        return repository.getProducersByCategory(category);
+    }
 }
