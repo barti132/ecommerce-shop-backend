@@ -18,17 +18,17 @@ import pl.bartoszsredzinski.ecommerceshopv1.service.AuthService;
 
 @RestController
 @RequestMapping("/api/v1/auth")
-public class AuthRestController{
+public class AuthController{
 
     private final AuthService authService;
 
-    public AuthRestController(AuthService authService){
+    public AuthController(AuthService authService){
         this.authService = authService;
     }
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest){
         authService.signup(registerRequest);
-        return new ResponseEntity<>("User Reistration Successful", HttpStatus.OK);
+        return new ResponseEntity<>("User Registration Successful", HttpStatus.OK);
     }
 }

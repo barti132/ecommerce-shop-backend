@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Class description
+ * Image Service
  *
  * @author Bartosz Średziński
  * created on 19.02.2022

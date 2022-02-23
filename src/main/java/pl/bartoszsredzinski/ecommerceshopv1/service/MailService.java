@@ -1,5 +1,6 @@
 package pl.bartoszsredzinski.ecommerceshopv1.service;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import pl.bartoszsredzinski.ecommerceshopv1.model.NotificationEmail;
 
 /**
- * Class description
+ * Mail Service
  *
  * @author Bartosz Średziński
  * created on 23.02.2022
@@ -17,15 +18,11 @@ import pl.bartoszsredzinski.ecommerceshopv1.model.NotificationEmail;
 
 @Slf4j
 @Service
+@AllArgsConstructor
 public class MailService{
 
     private final JavaMailSender mailSender;
     private final MailContentBuilder mailContentBuilder;
-
-    public MailService(JavaMailSender mailSender, MailContentBuilder mailContentBuilder){
-        this.mailSender = mailSender;
-        this.mailContentBuilder = mailContentBuilder;
-    }
 
     public void sendMail(NotificationEmail notificationEmail){
         MimeMessagePreparator messagePreparator = mimeMessage -> {

@@ -2,10 +2,7 @@ package pl.bartoszsredzinski.ecommerceshopv1.model;
 
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,8 +14,8 @@ import java.math.BigDecimal;
  * @author Bartosz Średziński
  */
 @Entity
-@Table(name = "product")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

@@ -11,5 +11,5 @@ import pl.bartoszsredzinski.ecommerceshopv1.model.User;
  * created on 23.02.2022
  */
 @Repository
-public interface UserJpaRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Integer>{
 }

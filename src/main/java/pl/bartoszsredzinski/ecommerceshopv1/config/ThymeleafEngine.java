@@ -7,7 +7,7 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import org.thymeleaf.templateresolver.ITemplateResolver;
 
 /**
- * Class description
+ * TemplateEngine Configuration
  *
  * @author Bartosz Średziński
  * created on 23.02.2022

@@ -18,11 +18,11 @@ import java.util.Objects;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/products/")
-public class ProductRestController{
+public class ProductController{
 
     private final ProductService productService;
 
-    public ProductRestController(ProductService productService){
+    public ProductController(ProductService productService){
         this.productService = productService;
     }
 

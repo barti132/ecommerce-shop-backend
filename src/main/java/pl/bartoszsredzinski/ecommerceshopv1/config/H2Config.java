@@ -14,7 +14,6 @@ public class H2Config{
 
     /**
      * @return Server h2Server
-     * @throws SQLException
      */
     @Bean(initMethod = "start", destroyMethod = "stop")
     public Server h2Server() throws SQLException{

@@ -21,11 +21,11 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequestMapping("/api/v1/image")
-public class ImageRestController{
+public class ImageController{
 
     private final ImageService imageService;
 
-    public ImageRestController(ImageService imageService){
+    public ImageController(ImageService imageService){
         this.imageService = imageService;
     }
 

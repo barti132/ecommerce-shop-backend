@@ -1,10 +1,7 @@
 package pl.bartoszsredzinski.ecommerceshopv1.model;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -19,8 +16,8 @@ import java.util.List;
  */
 
 @Entity
-@Table(name = "user")
-@Data
+@Setter
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor

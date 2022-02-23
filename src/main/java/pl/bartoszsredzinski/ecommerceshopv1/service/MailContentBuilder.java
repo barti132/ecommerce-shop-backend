@@ -6,7 +6,7 @@ import org.thymeleaf.context.Context;
 
 
 /**
- * Class description
+ * Mail Content Builder Service
  *
  * @author Bartosz Średziński
  * created on 23.02.2022

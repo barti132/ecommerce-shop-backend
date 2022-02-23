@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Class description
+ * Cors Configuration - allow origins localhost:4200
  *
  * @author Bartosz Średziński
  * created on 23.02.2022

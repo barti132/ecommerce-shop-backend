@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 import pl.bartoszsredzinski.ecommerceshopv1.model.VerificationToken;
 
 /**
- * Class description
+ * Verification token crud repository
  *
  * @author Bartosz Średziński
  * created on 23.02.2022
