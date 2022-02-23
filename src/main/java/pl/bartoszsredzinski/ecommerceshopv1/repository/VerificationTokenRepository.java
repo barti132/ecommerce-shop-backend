@@ -4,6 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import pl.bartoszsredzinski.ecommerceshopv1.model.VerificationToken;
 
+import java.util.Optional;
+
 /**
  * Verification token crud repository
  *
@@ -12,4 +14,5 @@ import pl.bartoszsredzinski.ecommerceshopv1.model.VerificationToken;
  */
 @Repository
 public interface VerificationTokenRepository extends CrudRepository<VerificationToken, Integer>{
+    Optional<VerificationToken> findByToken(String token);
 }
