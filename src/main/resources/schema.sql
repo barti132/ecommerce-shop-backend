@@ -50,11 +50,11 @@ CREATE TABLE user
 
 CREATE TABLE token
 (
-    id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    token      VARCHAR(255) NOT NULL,
-    id_user    INT          ,
-    expiryDate DATE         ,
-    FOREIGN KEY (id_user) REFERENCES user (id)
+    id          INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    token       VARCHAR(255) NOT NULL,
+    user_id     INT,
+    expiry_date DATE,
+    FOREIGN KEY (user_id) REFERENCES user (id)
 );
 
 CREATE TABLE wishlist

@@ -1,5 +1,6 @@
 package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.service.AuthService;
  * created on 23.02.2022
  */
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController{
@@ -28,6 +30,7 @@ public class AuthController{
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest){
+        log.info("POST auth/signup");
         authService.signup(registerRequest);
         return new ResponseEntity<>("User Registration Successful", HttpStatus.OK);
     }
