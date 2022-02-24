@@ -1,10 +1,11 @@
 package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.AuthenticationResponse;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RegisterRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.LoginRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.service.AuthService;
 
 import static org.springframework.http.HttpStatus.OK;
@@ -39,5 +40,10 @@ public class AuthController{
         log.info("GET accountVerification/{token}");
         authService.verifyAccount(token);
         return new ResponseEntity<>("Account activated successfully", OK);
+    }
+
+    @PostMapping("/login")
+    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest){
+        return authService.login(loginRequest);
     }
 }
