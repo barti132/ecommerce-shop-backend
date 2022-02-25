@@ -9,11 +9,10 @@ import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
 
-import java.security.Key;
 import java.time.Instant;
 
 /**
- * Class description
+ * Jwt provider
  *
  * @author Bartosz Średziński
  * created on 24.02.2022
@@ -31,12 +30,12 @@ public class JwtProvider{
         return generateTokenWithLogin(principal.getUsername());
     }
 
-    private String generateTokenWithLogin(String username){
+    private String generateTokenWithLogin(String login){
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(Instant.now())
                 .expiresAt(Instant.now().plusMillis(jwtExpirationInMillis))
-                .subject(username)
+                .subject(login)
                 .claim("scope", "ROLE_USER")
                 .build();
 

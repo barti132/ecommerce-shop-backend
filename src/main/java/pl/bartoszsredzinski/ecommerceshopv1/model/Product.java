@@ -8,6 +8,8 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /**
  * This class is representation of product model.
  *
@@ -21,8 +23,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 public class Product implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
 
     @NotNull
@@ -31,7 +32,7 @@ public class Product implements Serializable{
 
     @NotNull
     @Column(length = 64)
-    private String producer_name;
+    private String producerName;
 
     @NotNull
     @Column(length = 32)
@@ -45,8 +46,8 @@ public class Product implements Serializable{
     private String img;
 
     @NotNull
-    private BigDecimal price_net;
+    private BigDecimal priceNet;
 
     @NotNull
-    private BigDecimal price_gross;
+    private BigDecimal priceGross;
 }

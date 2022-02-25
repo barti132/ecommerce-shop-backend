@@ -60,3 +60,9 @@ INSERT INTO address(address, city, country, postal_code)
 VALUES ('Poznanska 15', 'Gniezno', 'Poland', '62-200'),
        ('Poznanska 25', 'Krakow', 'Poland', '30-409'),
        ('Krakowska 16', 'Pcim', 'Poland', '60-201');
+
+INSERT INTO user(email, login, password, name, last_name, role, enabled)
+VALUES ( 'email@email.com', 'user1',  '$2a$10$J17Tl4lsfCZeyLQbN4xa/e2oGzNdTUy.dyzWs6/ESUpsV7TmqVnLG', 'John', 'Whick', 'user', TRUE),
+       ( 'email@email.com', 'user2',  '$2a$10$.4di3DlpJbEWjU7j9.mlgekjekmUkGkBUISSNObZwe9YkxZa1cju.', 'Bob', 'Byte', 'user', TRUE),
+       ( 'email@email.com', 'user3',  '$2a$10$dXRPMwnGSuNsea6.KHWBKuPQLs1s7odLQvqJXRVFvEyE/qDHyvc5i', 'Alice', 'Bit', 'user', TRUE),
+       ( 'email@email.com', 'admin',  '$2a$10$B74YiQiY0AsJ7lmm/wGeS.0bDUG9V3/l/KuT9uEZS1H2JCwDZs45y', 'Super', 'User', 'admin', TRUE);

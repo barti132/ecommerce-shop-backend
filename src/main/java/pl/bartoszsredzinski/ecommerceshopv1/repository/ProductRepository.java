@@ -22,6 +22,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 
     List<Product> findAllByCategory(String category);
 
-    @Query("SELECT DISTINCT p.producer_name FROM Product p WHERE p.category = :cat")
+    @Query("SELECT DISTINCT p.producerName FROM Product p WHERE p.category = :cat")
     List<String> getProducersByCategory(@Param("cat") String category);
 }

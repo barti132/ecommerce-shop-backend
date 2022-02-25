@@ -6,6 +6,8 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /**
  * This class is representation of address model.
  *
@@ -21,8 +23,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Address implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
 
     @NotNull
@@ -40,4 +41,8 @@ public class Address implements Serializable{
     @NotNull
     @Column(length = 16)
     private String postal_code;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 }

@@ -16,10 +16,11 @@ import java.util.Collections;
 import java.util.Optional;
 
 /**
- * Class description
+ * User Detail Service implementation
  *
  * @author Bartosz Średziński
  * created on 24.02.2022
+ * @see UserDetailsService
  */
 @Service
 @AllArgsConstructor

@@ -15,8 +15,8 @@ public class H2Config{
     /**
      * @return Server h2Server
      */
-    @Bean(initMethod = "start", destroyMethod = "stop")
-    public Server h2Server() throws SQLException{
-        return Server.createTcpServer("-tcp");
-    }
+   // @Bean(initMethod = "start", destroyMethod = "stop")
+   // public Server h2Server() throws SQLException{
+   //     return Server.createTcpServer("-tcp");
+   // }
 }

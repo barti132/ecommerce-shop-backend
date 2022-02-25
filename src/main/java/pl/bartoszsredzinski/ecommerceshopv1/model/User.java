@@ -8,6 +8,8 @@ import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.List;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 /**
  * This class is representation of user model.
  *
@@ -23,8 +25,7 @@ import java.util.List;
 @AllArgsConstructor
 public class User implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
+    @GeneratedValue(strategy = IDENTITY)
     private Integer id;
 
     @Column(length = 16)
@@ -53,10 +54,10 @@ public class User implements Serializable{
     private String lastName;
 
     @NotNull
+    @Column(length = 32)
     private String role;
 
-    @OneToMany
-    @JoinTable(name="user_adresses")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
     private List<Address> Addresses;
 
     @NotNull
