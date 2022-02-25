@@ -14,7 +14,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.service.ImageService;
 import java.io.IOException;
 
 /**
- * This controller class handle image request.
+ * Image rest controller
  *
  * @author Bartosz Średziński
  */
@@ -30,13 +30,8 @@ public class ImageController{
     }
 
     /**
-     * GET /api/v1/image/{filename}
-     * <p>
-     * This endpoint return an image from FILE_PATH_ROOT folder
-     * </p>
-     *
      * @param filename image file name
-     * @return ResponseEntity<byte [ ]>  with code 200 if success or 500 if there was an exception
+     * @return ResponseEntity<byte [ ]>  - image with code 200 or 500 if error
      */
     @GetMapping("/{filename}")
     public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename){

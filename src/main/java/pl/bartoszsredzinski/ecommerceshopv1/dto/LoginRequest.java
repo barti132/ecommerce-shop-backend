@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Class description
+ * Login request
  *
  * @author Bartosz Średziński
  * created on 24.02.2022
@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequest{
-
     private String login;
     private String password;
 }

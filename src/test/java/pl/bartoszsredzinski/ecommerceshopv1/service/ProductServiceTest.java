@@ -28,21 +28,21 @@ class ProductServiceTest {
     void init() {
         product1 = Product.builder()
                 .category("category1")
-                .producer_name("producer1")
+                .producerName("producer1")
                 .name("Special product")
                 .description("")
                 .img("")
-                .price_net(new BigDecimal(0))
-                .price_gross(new BigDecimal(0)).build();
+                .priceNet(new BigDecimal(0))
+                .priceGross(new BigDecimal(0)).build();
 
         product2 = Product.builder()
                 .category("category2")
-                .producer_name("producer2")
+                .producerName("producer2")
                 .name("Special product but another")
                 .description("")
                 .img("")
-                .price_net(new BigDecimal(0))
-                .price_gross(new BigDecimal(0)).build();
+                .priceNet(new BigDecimal(0))
+                .priceGross(new BigDecimal(0)).build();
 
         productService.save(product1);
         productService.save(product2);

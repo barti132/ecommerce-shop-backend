@@ -7,8 +7,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.repository.ProductRepository;
 import java.util.*;
 
 /**
- * Service - working on ProductRepository
- * Implements interface CrudService with Product as repository class & Integer as id
+ * Product service
  *
  * @author Bartosz Średziński
  * @see pl.bartoszsredzinski.ecommerceshopv1.service.CrudService

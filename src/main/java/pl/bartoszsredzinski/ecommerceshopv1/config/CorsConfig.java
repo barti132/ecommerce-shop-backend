@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
- * Cors Configuration - allow origins localhost:4200
+ * Cors Configuration
  *
  * @author Bartosz Średziński
  * created on 23.02.2022
@@ -17,6 +17,7 @@ public class CorsConfig{
 
 
     /**
+     * Configuration allows request form localhost:4200
      * @return WebMvcConfigurer - config with added mapping for localhost
      */
     @Bean

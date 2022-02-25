@@ -11,7 +11,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.service.AuthService;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
- * Class description
+ * Auth rest controller
  *
  * @author Bartosz Średziński
  * created on 23.02.2022
@@ -37,13 +37,14 @@ public class AuthController{
 
     @GetMapping("accountVerification/{token}")
     public ResponseEntity<String> verifyAccount(@PathVariable String token){
-        log.info("GET accountVerification/{token}");
+        log.info("GET auth/accountVerification/{token}");
         authService.verifyAccount(token);
         return new ResponseEntity<>("Account activated successfully", OK);
     }
 
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody LoginRequest loginRequest){
+        log.info("GET auth/login");
         return authService.login(loginRequest);
     }
 }

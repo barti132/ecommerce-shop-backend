@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Interface with basic crud methods
  *
- * @param <T> - Service class
+ * @param <T> - model class
  * @param <ID> - Id class
  */
 public interface CrudService<T, ID>{

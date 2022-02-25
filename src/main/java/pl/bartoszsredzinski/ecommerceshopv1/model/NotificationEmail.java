@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Class description
+ * Notification email model
  *
  * @author Bartosz Średziński
  * created on 23.02.2022
