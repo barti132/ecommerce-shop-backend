@@ -9,7 +9,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.UserRepository;
 
 /**
- * Class description
+ * User service
  *
  * @author Bartosz Średziński
  * created on 24.02.2022
@@ -20,7 +20,6 @@ public class UserService{
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
-
 
     @Transactional(readOnly = true)
     public UserDto getUserByID(Integer id){

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Class description
+ * Authentication response
  *
  * @author Bartosz Średziński
  * created on 24.02.2022

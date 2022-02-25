@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Class description
+ * Register Request
  *
  * @author Bartosz Średziński
  * created on 23.02.2022
@@ -15,11 +15,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest{
-
     private String email;
     private String login;
     private String password;
     private String name;
     private String lastName;
-
 }

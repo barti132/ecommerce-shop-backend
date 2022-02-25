@@ -6,7 +6,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 
 /**
- * Class description
+ * User mapper
  *
  * @author Bartosz Średziński
  * created on 24.02.2022

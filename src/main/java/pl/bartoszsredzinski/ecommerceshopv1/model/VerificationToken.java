@@ -13,7 +13,7 @@ import java.time.Instant;
 import static javax.persistence.FetchType.LAZY;
 
 /**
- * Class description
+ * Verification token
  *
  * @author Bartosz Średziński
  * created on 23.02.2022

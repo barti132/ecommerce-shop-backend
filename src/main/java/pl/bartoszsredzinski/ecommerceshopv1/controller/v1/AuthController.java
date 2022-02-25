@@ -11,7 +11,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.service.AuthService;
 import static org.springframework.http.HttpStatus.OK;
 
 /**
- * Class description
+ * Auth rest controller
  *
  * @author Bartosz Średziński
  * created on 23.02.2022

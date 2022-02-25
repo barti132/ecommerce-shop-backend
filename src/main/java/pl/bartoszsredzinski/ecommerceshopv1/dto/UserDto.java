@@ -16,7 +16,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 public class UserDto{
-
     private String email;
     private String login;
     private String name;

@@ -10,7 +10,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
 
 /**
- * Class description
+ * User rest controller
  *
  * @author Bartosz Średziński
  * created on 24.02.2022
@@ -23,6 +23,11 @@ public class UserController{
 
     private final UserService userService;
 
+
+    /**
+     * @param id user id
+     * @return UserDto user with given id
+     */
     @GetMapping("/{id}")
     public UserDto getUserById(@PathVariable Integer id){
         log.info("GET users/" + id);

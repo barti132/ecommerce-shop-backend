@@ -11,7 +11,7 @@ import java.util.List;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * This class is representation of user model.
+ * User model
  *
  * @author Bartosz Średziński
  * created on 22.02.2022

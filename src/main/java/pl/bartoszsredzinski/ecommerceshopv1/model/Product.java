@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * This class is representation of product model.
+ * Product model
  *
  * @author Bartosz Średziński
  */

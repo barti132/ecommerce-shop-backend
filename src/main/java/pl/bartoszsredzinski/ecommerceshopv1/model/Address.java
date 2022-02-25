@@ -9,7 +9,7 @@ import java.io.Serializable;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * This class is representation of address model.
+ * Address model
  *
  * @author Bartosz Średziński
  * created on 22.02.2022
