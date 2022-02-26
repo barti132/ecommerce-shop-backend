@@ -1,12 +1,14 @@
-package pl.bartoszsredzinski.ecommerceshopv1.service;
+package pl.bartoszsredzinski.ecommerceshopv1.service.auth;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.AuthenticationResponse;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.LoginRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RefreshTokenRequest;
@@ -16,9 +18,8 @@ import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 import pl.bartoszsredzinski.ecommerceshopv1.model.VerificationToken;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.VerificationTokenRepository;
 import pl.bartoszsredzinski.ecommerceshopv1.security.JwtProvider;
+import pl.bartoszsredzinski.ecommerceshopv1.service.mail.MailService;
 
-import javax.transaction.Transactional;
-import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -60,6 +61,15 @@ public class AuthService{
                         " account: http://localhost:8080/api/v1/auth/accountVerification/" + token));
     }
 
+    @Transactional(readOnly = true)
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getName());
+        return userRepository.findByLogin(authentication.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + authentication.getName()));
+    }
+
+
     private String generateVerificationToken(User user){
         String token = UUID.randomUUID().toString();
         VerificationToken verificationToken = new VerificationToken();
@@ -89,22 +99,12 @@ public class AuthService{
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         String token = jwtProvider.generateToken(authenticate);
 
-        return AuthenticationResponse.builder()
-                .authenticationToken(token)
-                .refreshToken(refreshTokenService.generateRefreshToken().getToken())
-                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
-                .login(loginRequest.getLogin())
-                .build();
+        return new AuthenticationResponse(token, refreshTokenService.generateRefreshToken().getToken());
     }
 
     public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest){
         refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
-        String token = jwtProvider.generateTokenWithLogin(refreshTokenRequest.getLogin());
-        return AuthenticationResponse.builder()
-                .authenticationToken(token)
-                .refreshToken(refreshTokenRequest.getRefreshToken())
-                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
-                .login(refreshTokenRequest.getLogin())
-                .build();
+        String token = jwtProvider.generateTokenWithLoginAndRole(refreshTokenRequest.getLogin(), null);
+        return new AuthenticationResponse(token, refreshTokenRequest.getRefreshToken());
     }
 }

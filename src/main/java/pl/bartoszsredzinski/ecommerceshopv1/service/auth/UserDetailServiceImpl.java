@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1.service;
+package pl.bartoszsredzinski.ecommerceshopv1.service.auth;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

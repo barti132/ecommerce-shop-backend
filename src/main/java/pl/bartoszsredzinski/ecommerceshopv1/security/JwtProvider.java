@@ -2,6 +2,7 @@ package pl.bartoszsredzinski.ecommerceshopv1.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -29,16 +30,16 @@ public class JwtProvider{
 
     public String generateToken(Authentication authentication){
         User principal = (User) authentication.getPrincipal();
-        return generateTokenWithLogin(principal.getUsername());
+        return generateTokenWithLoginAndRole(principal.getUsername(), principal.getAuthorities());
     }
 
-    public String generateTokenWithLogin(String login){
+    public String generateTokenWithLoginAndRole(String login, Collection<GrantedAuthority> role){
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .subject(login)
                 .issuedAt(Instant.now())
                 .expiresAt(Instant.now().plusMillis(jwtExpirationInMillis))
-                .claim("scope", "ROLE_USER")
+                .claim("scope", role.iterator().next().getAuthority())
                 .build();
 
         return this.jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
