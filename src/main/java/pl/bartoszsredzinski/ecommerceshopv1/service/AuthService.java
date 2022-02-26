@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.AuthenticationResponse;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.LoginRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.RefreshTokenRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RegisterRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.model.NotificationEmail;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
@@ -17,6 +18,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.repository.VerificationTokenReposito
 import pl.bartoszsredzinski.ecommerceshopv1.security.JwtProvider;
 
 import javax.transaction.Transactional;
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,6 +38,7 @@ public class AuthService{
     private final MailService mailService;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
+    private final RefreshTokenService refreshTokenService;
 
     @Transactional
     public void signup(RegisterRequest registerRequest){
@@ -83,9 +86,25 @@ public class AuthService{
     public AuthenticationResponse login(LoginRequest loginRequest){
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getLogin(), loginRequest.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         String token = jwtProvider.generateToken(authenticate);
-        return new AuthenticationResponse(token, loginRequest.getLogin());
+
+        return AuthenticationResponse.builder()
+                .authenticationToken(token)
+                .refreshToken(refreshTokenService.generateRefreshToken().getToken())
+                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
+                .login(loginRequest.getLogin())
+                .build();
+    }
+
+    public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest){
+        refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
+        String token = jwtProvider.generateTokenWithLogin(refreshTokenRequest.getLogin());
+        return AuthenticationResponse.builder()
+                .authenticationToken(token)
+                .refreshToken(refreshTokenRequest.getRefreshToken())
+                .expiresAt(Instant.now().plusMillis(jwtProvider.getJwtExpirationInMillis()))
+                .login(refreshTokenRequest.getLogin())
+                .build();
     }
 }
