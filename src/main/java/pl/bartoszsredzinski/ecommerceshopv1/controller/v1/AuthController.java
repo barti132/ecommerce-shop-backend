@@ -1,12 +1,21 @@
 package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.AuthenticationResponse;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.RefreshTokenRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RegisterRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.LoginRequest;
-import pl.bartoszsredzinski.ecommerceshopv1.service.AuthService;
+import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
+import pl.bartoszsredzinski.ecommerceshopv1.service.auth.RefreshTokenService;
+
+import javax.validation.Valid;
 
 import static org.springframework.http.HttpStatus.OK;
 
@@ -18,15 +27,13 @@ import static org.springframework.http.HttpStatus.OK;
  */
 
 @Slf4j
+@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/auth")
 public class AuthController{
 
     private final AuthService authService;
-
-    public AuthController(AuthService authService){
-        this.authService = authService;
-    }
+    private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/signup")
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest){
@@ -35,16 +42,28 @@ public class AuthController{
         return new ResponseEntity<>("User Registration Successful", OK);
     }
 
-    @GetMapping("accountVerification/{token}")
+    @GetMapping("/accountVerification/{token}")
     public ResponseEntity<String> verifyAccount(@PathVariable String token){
         log.info("GET auth/accountVerification/{token}");
         authService.verifyAccount(token);
         return new ResponseEntity<>("Account activated successfully", OK);
     }
 
+    @Transactional
     @PostMapping("/login")
     public AuthenticationResponse login(@RequestBody LoginRequest loginRequest){
         log.info("GET auth/login");
         return authService.login(loginRequest);
+    }
+
+    @PostMapping("/refresh/token")
+    public AuthenticationResponse refreshToken(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest){
+        return authService.refreshToken(refreshTokenRequest);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest){
+        refreshTokenService.deleteRefreshToken(refreshTokenRequest.getRefreshToken());
+        return ResponseEntity.status(OK).body("Refresh token deleted successfully!");
     }
 }

@@ -1,22 +1,25 @@
-package pl.bartoszsredzinski.ecommerceshopv1.service;
+package pl.bartoszsredzinski.ecommerceshopv1.service.auth;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.AuthenticationResponse;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.LoginRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.RefreshTokenRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RegisterRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.model.NotificationEmail;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 import pl.bartoszsredzinski.ecommerceshopv1.model.VerificationToken;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.VerificationTokenRepository;
 import pl.bartoszsredzinski.ecommerceshopv1.security.JwtProvider;
+import pl.bartoszsredzinski.ecommerceshopv1.service.mail.MailService;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,6 +39,7 @@ public class AuthService{
     private final MailService mailService;
     private final AuthenticationManager authenticationManager;
     private final JwtProvider jwtProvider;
+    private final RefreshTokenService refreshTokenService;
 
     @Transactional
     public void signup(RegisterRequest registerRequest){
@@ -56,6 +60,15 @@ public class AuthService{
                 "Thank you for signing up.\n Please click on the below url to activate your" +
                         " account: http://localhost:8080/api/v1/auth/accountVerification/" + token));
     }
+
+    @Transactional(readOnly = true)
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        System.out.println(authentication.getName());
+        return userRepository.findByLogin(authentication.getName())
+                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + authentication.getName()));
+    }
+
 
     private String generateVerificationToken(User user){
         String token = UUID.randomUUID().toString();
@@ -83,9 +96,15 @@ public class AuthService{
     public AuthenticationResponse login(LoginRequest loginRequest){
         Authentication authenticate = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getLogin(), loginRequest.getPassword()));
-
         SecurityContextHolder.getContext().setAuthentication(authenticate);
         String token = jwtProvider.generateToken(authenticate);
-        return new AuthenticationResponse(token, loginRequest.getLogin());
+
+        return new AuthenticationResponse(token, refreshTokenService.generateRefreshToken().getToken());
+    }
+
+    public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest){
+        refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
+        String token = jwtProvider.generateTokenWithLoginAndRole(refreshTokenRequest.getLogin(), null);
+        return new AuthenticationResponse(token, refreshTokenRequest.getRefreshToken());
     }
 }

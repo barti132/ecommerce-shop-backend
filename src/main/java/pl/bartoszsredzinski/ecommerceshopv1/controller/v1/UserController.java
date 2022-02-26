@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
+import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 
 /**
  * User rest controller
@@ -22,7 +23,6 @@ import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
 public class UserController{
 
     private final UserService userService;
-
 
     /**
      * @param id user id

@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1.service;
+package pl.bartoszsredzinski.ecommerceshopv1.service.auth;
 
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -35,7 +35,7 @@ public class UserDetailServiceImpl implements UserDetailsService{
         User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
 
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), user.isEnabled(),
-                true, true, true, getAuthorities("USER"));
+                true, true, true, getAuthorities(user.getRole()));
     }
 
     private Collection<? extends GrantedAuthority> getAuthorities(String role){

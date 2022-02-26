@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1.service;
+package pl.bartoszsredzinski.ecommerceshopv1.service.mail;
 
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
