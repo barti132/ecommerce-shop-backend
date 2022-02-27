@@ -64,7 +64,6 @@ public class AuthService{
     @Transactional(readOnly = true)
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println(authentication.getName());
         return userRepository.findByLogin(authentication.getName())
                 .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + authentication.getName()));
     }
@@ -104,7 +103,7 @@ public class AuthService{
 
     public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest){
         refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
-        String token = jwtProvider.generateTokenWithLoginAndRole(refreshTokenRequest.getLogin(), null);
+        String token = jwtProvider.generateTokenWithLoginAndRole(refreshTokenRequest.getLogin(), getCurrentUser().getRole());
         return new AuthenticationResponse(token, refreshTokenRequest.getRefreshToken());
     }
 }

@@ -3,15 +3,12 @@ package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.AuthenticationResponse;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.LoginRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RefreshTokenRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RegisterRequest;
-import pl.bartoszsredzinski.ecommerceshopv1.dto.LoginRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 import pl.bartoszsredzinski.ecommerceshopv1.service.auth.RefreshTokenService;
 
@@ -42,6 +39,7 @@ public class AuthController{
         return new ResponseEntity<>("User Registration Successful", OK);
     }
 
+    @Transactional
     @GetMapping("/accountVerification/{token}")
     public ResponseEntity<String> verifyAccount(@PathVariable String token){
         log.info("GET auth/accountVerification/{token}");
