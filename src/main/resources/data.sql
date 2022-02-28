@@ -66,3 +66,8 @@ VALUES ( 'email@email.com', 'user1',  '$2a$10$J17Tl4lsfCZeyLQbN4xa/e2oGzNdTUy.dy
        ( 'email@email.com', 'user2',  '$2a$10$.4di3DlpJbEWjU7j9.mlgekjekmUkGkBUISSNObZwe9YkxZa1cju.', 'Bob', 'Byte', 'user', TRUE),
        ( 'email@email.com', 'user3',  '$2a$10$dXRPMwnGSuNsea6.KHWBKuPQLs1s7odLQvqJXRVFvEyE/qDHyvc5i', 'Alice', 'Bit', 'user', TRUE),
        ( 'email@email.com', 'admin',  '$2a$10$B74YiQiY0AsJ7lmm/wGeS.0bDUG9V3/l/KuT9uEZS1H2JCwDZs45y', 'Super', 'User', 'admin', TRUE);
+
+INSERT INTO user_addresses(user_id, addresses_id)
+VALUES ( 1, 1 ),
+       ( 1, 2),
+       (2, 3);

@@ -41,8 +41,4 @@ public class Address implements Serializable{
     @NotNull
     @Column(length = 16)
     private String postalCode;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
 }

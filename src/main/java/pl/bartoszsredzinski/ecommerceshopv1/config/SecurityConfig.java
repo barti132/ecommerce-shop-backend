@@ -63,6 +63,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
         http.cors().configurationSource(corsConfigurationSource());
         http.csrf().disable();
+        http.headers().frameOptions().disable(); //for h2-console
     }
 
     @Bean

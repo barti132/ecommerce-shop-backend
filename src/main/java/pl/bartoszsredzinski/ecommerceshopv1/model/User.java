@@ -57,7 +57,7 @@ public class User implements Serializable{
     @Column(length = 32)
     private String role;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Address> Addresses;
 
     @NotNull

@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.UserMapper;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
+import pl.bartoszsredzinski.ecommerceshopv1.repository.AddressRepository;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.UserRepository;
 import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 
@@ -20,6 +22,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 public class UserService{
 
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
     private final UserMapper userMapper;
     private final AuthService authService;
 
@@ -33,5 +36,25 @@ public class UserService{
     public UserDto getCurrentUser(){
         User user = authService.getCurrentUser();
         return userMapper.userToUserDto(user);
+    }
+
+    @Transactional
+    public void addAddressToCurrentUser(Address address){
+        User user = authService.getCurrentUser();
+        Address add = Address.builder().address(address.getAddress()).city(address.getCity())
+                .country(address.getCountry()).postalCode(address.getPostalCode()).build();
+
+        addressRepository.save(add);
+
+        user.getAddresses().add(add);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteAddressFromCurrentUser(Integer id){
+        User user = authService.getCurrentUser();
+        Address address = addressRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid address id"));
+        user.getAddresses().remove(user.getAddresses().indexOf(address));
+        addressRepository.delete(address);
     }
 }
