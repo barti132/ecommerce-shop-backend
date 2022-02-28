@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
+
+import java.util.List;
 
 /**
  * User data transfer object
@@ -21,4 +24,5 @@ public class UserDto{
     private String name;
     private String lastName;
     private String phoneNumber;
+    private List<Address> addresses;
 }

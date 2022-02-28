@@ -33,4 +33,9 @@ public class UserController{
         log.info("GET users/" + id);
         return userService.getUserByID(id);
     }
+
+    @GetMapping("/currentUser")
+    public UserDto getCurrentUser(){
+        return userService.getCurrentUser();
+    }
 }

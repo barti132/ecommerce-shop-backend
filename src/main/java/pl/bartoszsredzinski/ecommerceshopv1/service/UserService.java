@@ -7,6 +7,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.UserMapper;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.UserRepository;
+import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 
 /**
  * User service
@@ -20,6 +21,7 @@ public class UserService{
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final AuthService authService;
 
     @Transactional(readOnly = true)
     public UserDto getUserByID(Integer id){
@@ -27,4 +29,9 @@ public class UserService{
         return  userMapper.userToUserDto(user);
     }
 
+    @Transactional(readOnly = true)
+    public UserDto getCurrentUser(){
+        User user = authService.getCurrentUser();
+        return userMapper.userToUserDto(user);
+    }
 }

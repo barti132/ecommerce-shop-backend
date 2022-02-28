@@ -40,7 +40,7 @@ public class Address implements Serializable{
 
     @NotNull
     @Column(length = 16)
-    private String postal_code;
+    private String postalCode;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
