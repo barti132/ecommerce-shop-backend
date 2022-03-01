@@ -27,7 +27,7 @@ public class UserController{
     @GetMapping("/currentUser")
     public UserDto getCurrentUser(){
         log.info("GET user/currentUser");
-        return userService.getCurrentUser();
+        return userService.getCurrentUserDto();
     }
 
     @PostMapping("/addAddress")

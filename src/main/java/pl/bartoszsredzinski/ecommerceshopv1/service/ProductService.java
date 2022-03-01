@@ -86,6 +86,8 @@ public class ProductService implements CrudService<Product, Integer>{
         }
         if(lowerPrice != null){
             specification.add(new SearchCriteria("priceGross", ">=", lowerPrice));
+        }
+        if(upperPrice != null){
             specification.add(new SearchCriteria("priceGross", "<=", upperPrice));
         }
 

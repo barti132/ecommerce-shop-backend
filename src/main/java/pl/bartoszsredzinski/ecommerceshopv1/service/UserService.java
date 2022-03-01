@@ -30,13 +30,7 @@ public class UserService{
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public UserDto getUserByID(Integer id){
-        User user = userRepository.getById(id);
-        return  userMapper.userToUserDto(user);
-    }
-
-    @Transactional(readOnly = true)
-    public UserDto getCurrentUser(){
+    public UserDto getCurrentUserDto(){
         User user = authService.getCurrentUser();
         return userMapper.userToUserDto(user);
     }

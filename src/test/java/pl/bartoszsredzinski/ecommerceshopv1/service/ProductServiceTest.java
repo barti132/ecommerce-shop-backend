@@ -34,7 +34,7 @@ class ProductServiceTest {
                 .description("")
                 .img("")
                 .priceNet(new BigDecimal(0))
-                .priceGross(new BigDecimal(0)).build();
+                .priceGross(new BigDecimal(5)).build();
 
         product2 = Product.builder()
                 .category("category2")
@@ -43,16 +43,16 @@ class ProductServiceTest {
                 .description("")
                 .img("")
                 .priceNet(new BigDecimal(0))
-                .priceGross(new BigDecimal(0)).build();
+                .priceGross(new BigDecimal(10)).build();
 
         product3 = Product.builder()
                 .category("category3")
-                .producerName("producer4")
-                .name("name3")
+                .producerName("producer3")
+                .name("name3 o")
                 .description("")
                 .img("")
                 .priceNet(new BigDecimal(0))
-                .priceGross(new BigDecimal(0)).build();
+                .priceGross(new BigDecimal(15)).build();
 
         productService.save(product1);
         productService.save(product2);
@@ -92,11 +92,6 @@ class ProductServiceTest {
     }
 
     @Test
-    public void findByCriteria_should_work(){
-
-    }
-
-    @Test
     public void getRandom_should_throw_exception(){
         assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(4));
         assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(0));
@@ -118,5 +113,30 @@ class ProductServiceTest {
         Integer id = productService.findAll().get(0).getId();
         productService.deleteById(id);
         assertEquals(2, productService.findAll().size());
+    }
+
+    @Test
+    public void findProductByCriteria_should_work(){
+        List<Product> products = productService.findProductByCriteria("name3", null, null, null, null);
+        assertEquals("name3 o", products.get(0).getName());
+
+        products = productService.findProductByCriteria(null, "category3", null, null, null);
+        assertEquals("category3", products.get(0).getCategory());
+
+        products = productService.findProductByCriteria("o", null, "producer2", null, null);
+        assertEquals(1, products.size());
+
+        products = productService.findProductByCriteria("o", null, null, "10", "20");
+        assertEquals(2, products.size());
+        products = productService.findProductByCriteria("o", null, null, "15", "20");
+        assertEquals(1, products.size());
+        products = productService.findProductByCriteria("o", null, null, "11", null);
+        assertEquals(1, products.size());
+        products = productService.findProductByCriteria("o", null, null, null, "10");
+        assertEquals(2, products.size());
+
+        products = productService.findProductByCriteria("name3", "category3", "producer3", "15", "20");
+        assertEquals(1, products.size());
+
     }
 }
