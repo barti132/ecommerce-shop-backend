@@ -12,7 +12,7 @@ import java.util.Optional;
  * @author Bartosz Średziński
  * created on 26.02.2022
  */
-@Repository
+
 public interface RefreshTokenRepository extends JpaRepository<RefreshToken, Long>{
     Optional<RefreshToken> findByToken(String token);
 

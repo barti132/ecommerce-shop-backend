@@ -27,38 +27,21 @@ public class ProductController{
     }
 
 
-    /**
-     * @param id Integer - product id
-     * @return Product or null
-     */
     @GetMapping("{id}")
     public Product getProductById(@PathVariable Integer id){
         log.info("GET products/" + id);
         return productService.findById(id);
     }
 
-    /**
-     * @param name     String - searching product name
-     * @param category String - searching product category
-     * @return List<Product> list of search products
-     */
     @GetMapping("search")
-    public List<Product> findProduct(@RequestParam(required = false) String name, @RequestParam(required = false) String category){
+    public List<Product> findProduct(@RequestParam(required = false) String name, @RequestParam(required = false) String category,
+                                     @RequestParam(required = false) String producer, @RequestParam(required = false) String lowerPrice,
+                                     @RequestParam(required = false) String upperPrice){
 
-        log.info("GET products/search?name=" + name + "&category=" + category);
-
-        if(name != null){
-            return productService.findByCriteria(name, category);
-        }
-
-        return productService.findAll();
+        log.info("GET products/search?name=" + name + "&category=" + category + "&producer=" + producer + "&lowerPrice=" + lowerPrice + "&upperPrice=" + upperPrice);
+        return productService.findProductByCriteria(name, category, producer, lowerPrice, upperPrice);
     }
 
-    /**
-     * Endpoints return list of random products. Default size of list is 6.
-     * @param limit Integer size of list
-     * @return List<Product> list of random products
-     */
     @GetMapping("random")
     public List<Product> getRandomProducts(@RequestParam(required = false) Integer limit){
         log.info("GET products/random?limit=" + limit);
@@ -70,21 +53,6 @@ public class ProductController{
         }
     }
 
-    /**
-     * @param category String category name
-     * @return List<Product> list of products with given category
-     */
-    @GetMapping("category/{category}")
-    public List<Product> getProductsByCategory(@PathVariable String category){
-        log.info("GET products/category/" + category);
-
-        return productService.getProductsByCategory(category);
-    }
-
-    /**
-     * @param category product category
-     * @return List<String> list of producers in given category
-     */
     @GetMapping("{category}/producers")
     public List<String> getProducersByCategory(@PathVariable String category){
         log.info("GET products/" + category + "/producers");

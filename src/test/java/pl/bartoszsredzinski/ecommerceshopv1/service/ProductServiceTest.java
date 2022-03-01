@@ -82,17 +82,7 @@ class ProductServiceTest {
 
     @Test
     public void findByCriteria_should_work(){
-        List<Product> list = productService.findByCriteria("Special", "any");
-        assertEquals(2, list.size());
 
-        list = productService.findByCriteria("", "any");
-        assertEquals(2, list.size());
-
-        list = productService.findByCriteria("another", "any");
-        assertEquals(1, list.size());
-
-        list = productService.findByCriteria("", "category1");
-        assertEquals(1, list.size());
     }
 
     @Test
@@ -108,9 +98,9 @@ class ProductServiceTest {
 
     @Test
     public void getByCategory_should_work(){
-        assertEquals(1, productService.getProductsByCategory("category1").size());
-        assertEquals(1, productService.getProductsByCategory("category2").size());
-        assertEquals(0, productService.getProductsByCategory("category3").size());
+        assertEquals(1, productService.getProductsByCategoryAndCriteria("category1", null, null).size());
+        assertEquals(1, productService.getProductsByCategoryAndCriteria("category2", null, null).size());
+        assertEquals(0, productService.getProductsByCategoryAndCriteria("category3", null, null).size());
     }
 
     @Test

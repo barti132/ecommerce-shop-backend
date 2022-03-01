@@ -3,7 +3,10 @@ package pl.bartoszsredzinski.ecommerceshopv1.service;
 import org.springframework.stereotype.Service;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.ProductRepository;
+import pl.bartoszsredzinski.ecommerceshopv1.service.productspecification.ProductSpecification;
+import pl.bartoszsredzinski.ecommerceshopv1.service.productspecification.SearchCriteria;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 /**
@@ -46,15 +49,6 @@ public class ProductService implements CrudService<Product, Integer>{
         repository.deleteById(id);
     }
 
-    public List<Product> findByCriteria(String name, String category){
-        if(category.equals("any")){
-            return repository.findAllByNameContainsIgnoreCase(name);
-        }
-        else{
-            return repository.findAllByNameContainsIgnoreCaseAndCategoryContainsIgnoreCase(name, category);
-        }
-    }
-
     public List<Product> getRandomProducts(Integer limit) throws ArrayIndexOutOfBoundsException{
         int productsNumber = (int) repository.count();
 
@@ -72,11 +66,31 @@ public class ProductService implements CrudService<Product, Integer>{
         return new ArrayList<>(randomProducts);
     }
 
-    public List<Product> getProductsByCategory(String category){
-        return repository.findAllByCategory(category);
-    }
-
     public List<String> getProducersByCategory(String category){
         return repository.getProducersByCategory(category);
+    }
+
+    public List<Product> findProductByCriteria(String name, String category, String producer, String lowerPrice, String upperPrice){
+        if(name == null && category == null){
+            return findAll();
+        }
+
+        ProductSpecification specification = new ProductSpecification();
+        if(name != null){
+            specification.add(new SearchCriteria("name", "=", name));
+        }
+        if(category != null){
+            specification.add(new SearchCriteria("category", "=", category));
+        }
+        if(producer != null){
+            specification.add(new SearchCriteria("producerName", ":", producer));
+        }
+        if(lowerPrice != null){
+            specification.add(new SearchCriteria("priceGross", ">=", lowerPrice));
+            specification.add(new SearchCriteria("priceGross", "<=", upperPrice));
+        }
+
+
+        return repository.findAll(specification);
     }
 }
