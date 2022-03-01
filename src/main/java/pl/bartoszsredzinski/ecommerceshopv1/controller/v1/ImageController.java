@@ -29,10 +29,6 @@ public class ImageController{
         this.imageService = imageService;
     }
 
-    /**
-     * @param filename image file name
-     * @return ResponseEntity<byte [ ]>  - image with code 200 or 500 if error
-     */
     @GetMapping("/{filename}")
     public ResponseEntity<byte[]> getImage(@PathVariable("filename") String filename){
         log.info("GET image/" + filename);

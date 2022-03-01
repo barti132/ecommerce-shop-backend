@@ -9,7 +9,6 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.PasswordDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
 import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
-import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 
 /**
  * User rest controller
@@ -28,7 +27,7 @@ public class UserController{
     @GetMapping("/currentUser")
     public UserDto getCurrentUser(){
         log.info("GET user/currentUser");
-        return userService.getCurrentUser();
+        return userService.getCurrentUserDto();
     }
 
     @PostMapping("/addAddress")
