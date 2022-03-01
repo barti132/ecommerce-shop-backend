@@ -2,6 +2,7 @@ package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -36,7 +37,7 @@ public class AuthController{
     public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest){
         log.info("POST auth/signup");
         authService.signup(registerRequest);
-        return new ResponseEntity<>("User Registration Successful", OK);
+        return new ResponseEntity<>("User Registration Successful", HttpStatus.CREATED);
     }
 
     @Transactional

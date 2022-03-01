@@ -1,8 +1,10 @@
 package pl.bartoszsredzinski.ecommerceshopv1.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.PasswordDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.UserMapper;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
@@ -25,6 +27,7 @@ public class UserService{
     private final AddressRepository addressRepository;
     private final UserMapper userMapper;
     private final AuthService authService;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public UserDto getUserByID(Integer id){
@@ -56,5 +59,25 @@ public class UserService{
         Address address = addressRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid address id"));
         user.getAddresses().remove(user.getAddresses().indexOf(address));
         addressRepository.delete(address);
+    }
+
+    @Transactional
+    public UserDto updateCurrentUser(UserDto userDto){
+        User user = authService.getCurrentUser();
+        user.setEmail(userDto.getEmail());
+        user.setLogin(userDto.getLogin());
+        user.setLastName(userDto.getLastName());
+        user.setName(userDto.getName());
+        user.setPhoneNumber(userDto.getPhoneNumber());
+
+        userRepository.save(user);
+        return userMapper.userToUserDto(user);
+    }
+
+    @Transactional
+    public void changePassword(PasswordDto passwordDto){
+        User user = authService.getCurrentUser();
+        user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
+        userRepository.save(user);
     }
 }

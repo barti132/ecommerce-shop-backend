@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.PasswordDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
 import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
@@ -17,39 +18,42 @@ import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
  * created on 24.02.2022
  */
 @RestController
-@RequestMapping("/api/v1/users")
+@RequestMapping("/api/v1/user")
 @AllArgsConstructor
 @Slf4j
 public class UserController{
 
     private final UserService userService;
 
-    /**
-     * @param id user id
-     * @return UserDto user with given id
-     */
-    @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable Integer id){
-        log.info("GET users/" + id);
-        return userService.getUserByID(id);
-    }
-
     @GetMapping("/currentUser")
     public UserDto getCurrentUser(){
-        log.info("GET users/currentUser");
+        log.info("GET user/currentUser");
         return userService.getCurrentUser();
     }
 
     @PostMapping("/addAddress")
     public ResponseEntity<String> addAddressToCurrentUser(@RequestBody Address address){
-        log.info("POST users/addAddressToCurrentUser");
+        log.info("POST user/addAddressToCurrentUser");
         userService.addAddressToCurrentUser(address);
         return new ResponseEntity<>("Adding address success", HttpStatus.OK);
     }
 
     @DeleteMapping("/address/{id}")
     public void deleteAddressByIdFromCurrentUser(@PathVariable Integer id){
-        log.info("DELETE users/address/" + id);
+        log.info("DELETE user/address/" + id);
         userService.deleteAddressFromCurrentUser(id);
+    }
+
+    @PutMapping("/update")
+    public UserDto updateCurrentUser(@RequestBody UserDto userDto){
+        log.info("Put user/update");
+        return userService.updateCurrentUser(userDto);
+    }
+
+    @PutMapping("/changePassword")
+    public ResponseEntity<String> changeUserPassword(@RequestBody PasswordDto passwordDto){
+        log.info("PUT user/changePassword");
+        userService.changePassword(passwordDto);
+        return new ResponseEntity<>("Changing password success", HttpStatus.OK);
     }
 }
