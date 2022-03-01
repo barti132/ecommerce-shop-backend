@@ -6,7 +6,6 @@ import pl.bartoszsredzinski.ecommerceshopv1.repository.ProductRepository;
 import pl.bartoszsredzinski.ecommerceshopv1.service.productspecification.ProductSpecification;
 import pl.bartoszsredzinski.ecommerceshopv1.service.productspecification.SearchCriteria;
 
-import java.math.BigDecimal;
 import java.util.*;
 
 /**

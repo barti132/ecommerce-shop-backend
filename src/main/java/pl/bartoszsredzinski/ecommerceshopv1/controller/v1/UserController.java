@@ -9,7 +9,6 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.PasswordDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
 import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
-import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 
 /**
  * User rest controller

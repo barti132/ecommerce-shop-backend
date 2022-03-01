@@ -23,6 +23,7 @@ class ProductServiceTest {
 
     private Product product1;
     private Product product2;
+    private Product product3;
 
     @BeforeEach
     void init() {
@@ -44,8 +45,18 @@ class ProductServiceTest {
                 .priceNet(new BigDecimal(0))
                 .priceGross(new BigDecimal(0)).build();
 
+        product3 = Product.builder()
+                .category("category3")
+                .producerName("producer4")
+                .name("name3")
+                .description("")
+                .img("")
+                .priceNet(new BigDecimal(0))
+                .priceGross(new BigDecimal(0)).build();
+
         productService.save(product1);
         productService.save(product2);
+        productService.save(product3);
     }
 
     @Test
@@ -58,7 +69,7 @@ class ProductServiceTest {
     @Test
     public void findAll_should_work(){
         List<Product> findResult = productService.findAll();
-        assertEquals(2, findResult.size());
+        assertEquals(3, findResult.size());
         assertEquals(findResult.get(0).getName(), product1.getName());
         assertEquals(findResult.get(1).getName(), product2.getName());
     }
@@ -76,7 +87,7 @@ class ProductServiceTest {
     public void findById_should_be_null(){
         Product prod1 = productService.findById(0);
         assertNull(prod1);
-        Product prod2 = productService.findById(3);
+        Product prod2 = productService.findById(4);
         assertNull(prod2);
     }
 
@@ -87,7 +98,7 @@ class ProductServiceTest {
 
     @Test
     public void getRandom_should_throw_exception(){
-        assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(3));
+        assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(4));
         assertThrows(ArrayIndexOutOfBoundsException.class, ()-> productService.getRandomProducts(0));
     }
 
@@ -97,22 +108,15 @@ class ProductServiceTest {
     }
 
     @Test
-    public void getByCategory_should_work(){
-        assertEquals(1, productService.getProductsByCategoryAndCriteria("category1", null, null).size());
-        assertEquals(1, productService.getProductsByCategoryAndCriteria("category2", null, null).size());
-        assertEquals(0, productService.getProductsByCategoryAndCriteria("category3", null, null).size());
-    }
-
-    @Test
     public void delete_should_work(){
         productService.delete(product1);
-        assertEquals(1, productService.findAll().size());
+        assertEquals(2, productService.findAll().size());
     }
 
     @Test
     public void deleteById_should_work(){
         Integer id = productService.findAll().get(0).getId();
         productService.deleteById(id);
-        assertEquals(1, productService.findAll().size());
+        assertEquals(2, productService.findAll().size());
     }
 }
