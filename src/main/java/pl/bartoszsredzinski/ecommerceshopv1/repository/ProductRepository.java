@@ -14,7 +14,7 @@ import java.util.List;
  * @author Bartosz Bartosz Średziński
  */
 
-public interface ProductRepository extends JpaRepository<Product, Integer>, JpaSpecificationExecutor<Product>{
+public interface ProductRepository extends JpaRepository<Product, Long>, JpaSpecificationExecutor<Product>{
 
     @Query("SELECT DISTINCT p.producerName FROM Product p WHERE p.category = :cat")
     List<String> getProducersByCategory(@Param("cat") String category);

@@ -1,10 +1,7 @@
 package pl.bartoszsredzinski.ecommerceshopv1.model;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,15 +18,15 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Table(name = "token")
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class VerificationToken implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotNull
-    private Integer id;
+    private Long id;
 
     @NotNull
     private String token;

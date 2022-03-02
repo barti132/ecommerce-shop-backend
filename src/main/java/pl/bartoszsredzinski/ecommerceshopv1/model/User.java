@@ -26,7 +26,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class User implements Serializable{
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Integer id;
+    private Long id;
 
     @Column(length = 16)
     private String phoneNumber;

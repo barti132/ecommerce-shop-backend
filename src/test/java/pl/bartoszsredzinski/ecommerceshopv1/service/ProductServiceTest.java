@@ -77,17 +77,17 @@ class ProductServiceTest {
     @Test
     public void findById_should_work(){
         //sql counting from 1
-        Product prod1 = productService.findById(1);
+        Product prod1 = productService.findById(1L);
         assertEquals(prod1.getName(), product1.getName());
-        Product prod2 = productService.findById(2);
+        Product prod2 = productService.findById(2L);
         assertEquals(prod2.getName(), product2.getName());
     }
 
     @Test
     public void findById_should_be_null(){
-        Product prod1 = productService.findById(0);
+        Product prod1 = productService.findById(0L);
         assertNull(prod1);
-        Product prod2 = productService.findById(4);
+        Product prod2 = productService.findById(4L);
         assertNull(prod2);
     }
 
@@ -110,7 +110,7 @@ class ProductServiceTest {
 
     @Test
     public void deleteById_should_work(){
-        Integer id = productService.findAll().get(0).getId();
+        Long id = productService.findAll().get(0).getId();
         productService.deleteById(id);
         assertEquals(2, productService.findAll().size());
     }

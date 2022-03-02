@@ -11,5 +11,5 @@ import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
  * created on 23.02.2022
  */
 @Repository
-public interface AddressRepository extends CrudRepository<Address, Integer>{
+public interface AddressRepository extends CrudRepository<Address, Long>{
 }

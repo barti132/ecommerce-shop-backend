@@ -48,7 +48,7 @@ public class UserService{
     }
 
     @Transactional
-    public void deleteAddressFromCurrentUser(Integer id){
+    public void deleteAddressFromCurrentUser(Long id){
         User user = authService.getCurrentUser();
         Address address = addressRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid address id"));
         user.getAddresses().remove(user.getAddresses().indexOf(address));

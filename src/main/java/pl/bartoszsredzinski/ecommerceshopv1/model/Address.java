@@ -24,7 +24,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Address implements Serializable{
     @Id
     @GeneratedValue(strategy = IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotNull
     @Column(length = 128)

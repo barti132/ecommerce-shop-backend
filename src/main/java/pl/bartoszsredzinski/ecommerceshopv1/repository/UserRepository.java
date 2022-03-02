@@ -12,6 +12,6 @@ import java.util.Optional;
  * created on 23.02.2022
  */
 
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Long>{
     Optional<User> findByLogin(String login);
 }

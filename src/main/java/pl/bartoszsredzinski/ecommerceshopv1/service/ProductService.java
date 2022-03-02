@@ -15,7 +15,7 @@ import java.util.*;
  * @see pl.bartoszsredzinski.ecommerceshopv1.service.CrudService
  */
 @Service
-public class ProductService implements CrudService<Product, Integer>{
+public class ProductService implements CrudService<Product, Long>{
 
     private final ProductRepository repository;
 
@@ -29,7 +29,7 @@ public class ProductService implements CrudService<Product, Integer>{
     }
 
     @Override
-    public Product findById(Integer id){
+    public Product findById(Long id){
         return repository.findById(id).orElse(null);
     }
 
@@ -44,7 +44,7 @@ public class ProductService implements CrudService<Product, Integer>{
     }
 
     @Override
-    public void deleteById(Integer id){
+    public void deleteById(Long id){
         repository.deleteById(id);
     }
 
@@ -59,7 +59,7 @@ public class ProductService implements CrudService<Product, Integer>{
         Set<Product> randomProducts = new LinkedHashSet<>();
 
         while(randomProducts.size() != limit){
-            randomProducts.add(findById(random.nextInt(productsNumber - 1) + 1));
+            randomProducts.add(findById(random.nextLong(productsNumber - 1) + 1));
         }
 
         return new ArrayList<>(randomProducts);

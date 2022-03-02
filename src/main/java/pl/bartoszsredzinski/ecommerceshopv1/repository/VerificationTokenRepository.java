@@ -13,6 +13,6 @@ import java.util.Optional;
  * created on 23.02.2022
  */
 @Repository
-public interface VerificationTokenRepository extends CrudRepository<VerificationToken, Integer>{
+public interface VerificationTokenRepository extends CrudRepository<VerificationToken, Long>{
     Optional<VerificationToken> findByToken(String token);
 }
