@@ -65,8 +65,6 @@ public class CartService{
         userRepository.save(user);
     }
 
-
-
     private boolean findProductInCartAndUpdate(User user, CartItem cartItem){
         Cart cart = user.getCart();
         for(CartItem i : cart.getProducts()){
@@ -142,9 +140,7 @@ public class CartService{
 
             cart.getProducts().remove(item);
             cartItemRepository.delete(item);
-
             cartRepository.save(cart);
-
         }
     }
 }

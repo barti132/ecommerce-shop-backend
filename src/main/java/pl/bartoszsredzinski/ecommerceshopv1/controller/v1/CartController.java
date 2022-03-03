@@ -8,7 +8,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.CartItemRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.service.CartService;
 
 /**
- * Class description
+ * Cart rest controller
  *
  * @author Bartosz Średziński
  * created on 03.03.2022
