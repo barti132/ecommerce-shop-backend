@@ -63,4 +63,7 @@ public class User implements Serializable{
     @NotNull
     private boolean enabled;
 
+    @OneToOne
+    private Cart cart;
+
 }

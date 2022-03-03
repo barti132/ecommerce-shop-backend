@@ -12,10 +12,9 @@ import java.util.*;
  * Product service
  *
  * @author Bartosz Średziński
- * @see pl.bartoszsredzinski.ecommerceshopv1.service.CrudService
  */
 @Service
-public class ProductService implements CrudService<Product, Long>{
+public class ProductService{
 
     private final ProductRepository repository;
 
@@ -23,30 +22,6 @@ public class ProductService implements CrudService<Product, Long>{
         this.repository = repository;
     }
 
-    @Override
-    public List<Product> findAll(){
-        return repository.findAll();
-    }
-
-    @Override
-    public Product findById(Long id){
-        return repository.findById(id).orElse(null);
-    }
-
-    @Override
-    public Product save(Product object){
-        return repository.save(object);
-    }
-
-    @Override
-    public void delete(Product object){
-        repository.delete(object);
-    }
-
-    @Override
-    public void deleteById(Long id){
-        repository.deleteById(id);
-    }
 
     public List<Product> getRandomProducts(Integer limit) throws ArrayIndexOutOfBoundsException{
         int productsNumber = (int) repository.count();
@@ -59,7 +34,7 @@ public class ProductService implements CrudService<Product, Long>{
         Set<Product> randomProducts = new LinkedHashSet<>();
 
         while(randomProducts.size() != limit){
-            randomProducts.add(findById(random.nextLong(productsNumber - 1) + 1));
+            randomProducts.add(repository.findById(random.nextLong(productsNumber - 1) + 1).orElse(null));
         }
 
         return new ArrayList<>(randomProducts);
@@ -71,7 +46,7 @@ public class ProductService implements CrudService<Product, Long>{
 
     public List<Product> findProductByCriteria(String name, String category, String producer, String lowerPrice, String upperPrice){
         if(name == null && category == null){
-            return findAll();
+            return repository.findAll();
         }
 
         ProductSpecification specification = new ProductSpecification();
@@ -93,5 +68,9 @@ public class ProductService implements CrudService<Product, Long>{
 
 
         return repository.findAll(specification);
+    }
+
+    public Product findById(Long id){
+        return repository.findById(id).orElse(null);
     }
 }
