@@ -31,12 +31,12 @@ public class Cart implements Serializable{
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    private Date createdDate;
+    private Date updatedDate;
 
     private BigDecimal totalPriceGross;
     private BigDecimal totalPriceNet;
     private Integer totalItems;
 
     @OneToMany
-    private List<CartItem> products;
+    private List<CartItem> products = new ArrayList<>();
 }

@@ -14,7 +14,7 @@ import java.io.Serializable;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * Class description
+ * Cart item model
  *
  * @author Bartosz Średziński
  * created on 03.03.2022
