@@ -5,7 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartItemRequest;
-import pl.bartoszsredzinski.ecommerceshopv1.model.CartItem;
 import pl.bartoszsredzinski.ecommerceshopv1.service.CartService;
 
 /**
@@ -41,7 +40,8 @@ public class CartController{
     }
 
     @DeleteMapping("/{login}/cartItem/{id}")
-    public void deleteCartItem(@PathVariable String login, @PathVariable Long id){
+    public void deleteCartItem(@PathVariable String login, @PathVariable Integer id){
         log.info("DELETE cart/" + login + "/cartItem/" + id);
+        cartService.deleteCartItemFromUserCart(id);
     }
 }

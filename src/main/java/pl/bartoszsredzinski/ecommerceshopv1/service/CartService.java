@@ -20,7 +20,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 /**
- * Class description
+ * Cart service
  *
  * @author Bartosz Średziński
  * created on 03.03.2022
@@ -90,7 +90,6 @@ public class CartService{
 
     private void addItemData(User user, CartItem cartItem){
         Cart cart = user.getCart();
-        cart.setUpdatedDate(new Date(System.currentTimeMillis()));
         cart.setTotalPriceGross(cart.getTotalPriceGross().add(cartItem.getProduct().getPriceGross().multiply(new BigDecimal(cartItem.getAmount()))));
         cart.setTotalPriceNet(cart.getTotalPriceNet().add(cartItem.getProduct().getPriceNet().multiply(new BigDecimal(cartItem.getAmount()))));
         cart.setTotalItems(cart.getTotalItems() + cartItem.getAmount());
@@ -124,6 +123,28 @@ public class CartService{
             cart.getProducts().clear();
 
             cartRepository.delete(cart);
+        }
+    }
+
+    @Transactional
+    public void deleteCartItemFromUserCart(Integer id){
+        User user = authService.getCurrentUser();
+
+        if(user.getCart() != null){
+            Cart cart = user.getCart();
+            CartItem item = cart.getProducts().get(id);
+
+
+            cart.setUpdatedDate(new Date(System.currentTimeMillis()));
+            cart.setTotalItems(cart.getTotalItems() - item.getAmount());
+            cart.setTotalPriceGross(cart.getTotalPriceGross().subtract(item.getProduct().getPriceGross().multiply(new BigDecimal(item.getAmount()))));
+            cart.setTotalPriceNet(cart.getTotalPriceNet().subtract(item.getProduct().getPriceNet().multiply(new BigDecimal(item.getAmount()))));
+
+            cart.getProducts().remove(item);
+            cartItemRepository.delete(item);
+
+            cartRepository.save(cart);
+
         }
     }
 }
