@@ -38,11 +38,11 @@ public class CartService{
     public CartDto getCartData(){
         User user = authService.getCurrentUser();
 
-        Cart cart = cartRepository.getFullCartByID(user.getCart().getId());
-        if(cart != null){
-            return cartMapper.cartToCartDto(cart);
+        if(user.getCart() == null){
+            return null;
         }
-        return null;
+        Cart cart = cartRepository.getFullCartByID(user.getCart().getId());
+        return cartMapper.cartToCartDto(cart);
     }
 
     @Transactional
@@ -52,26 +52,50 @@ public class CartService{
         CartItem cartItem = new CartItem();
         cartItem.setProduct(productRepository.findById(item.getProductId()).orElseThrow(() -> new RuntimeException("Wrong product id")));
         cartItem.setAmount(item.getAmount());
-        cartItemRepository.save(cartItem);
 
         if(user.getCart() == null){
             createNewCart(user);
         }
 
-        updateCartData(user, cartItem);
+        if(!findProductInCartAndUpdate(user, cartItem)){
+            cartItemRepository.save(cartItem);
+            addItemData(user, cartItem);
+        }
 
-
-        user.getCart().getProducts().add(cartItem);
         userRepository.save(user);
     }
 
-    private void updateCartData(User user, CartItem cartItem){
+
+
+    private boolean findProductInCartAndUpdate(User user, CartItem cartItem){
+        Cart cart = user.getCart();
+        for(CartItem i : cart.getProducts()){
+            if(i.getProduct().getId() == cartItem.getProduct().getId()){
+                i.setAmount(i.getAmount() + cartItem.getAmount());
+                updateCart(cart, cartItem);
+
+                cartRepository.save(cart);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void updateCart(Cart cart, CartItem cartItem){
+        cart.setTotalItems(cart.getTotalItems() + cartItem.getAmount());
+        cart.setTotalPriceGross(cart.getTotalPriceGross().add(cartItem.getProduct().getPriceGross().multiply(new BigDecimal(cartItem.getAmount()))));
+        cart.setTotalPriceNet(cart.getTotalPriceNet().add(cartItem.getProduct().getPriceNet().multiply(new BigDecimal(cartItem.getAmount()))));
+        cart.setUpdatedDate(new Date(System.currentTimeMillis()));
+    }
+
+    private void addItemData(User user, CartItem cartItem){
         Cart cart = user.getCart();
         cart.setUpdatedDate(new Date(System.currentTimeMillis()));
-        cart.setTotalPriceGross(cart.getTotalPriceGross().add(cartItem.getProduct().getPriceGross()));
-        cart.setTotalPriceNet(cart.getTotalPriceNet().add(cartItem.getProduct().getPriceNet()));
+        cart.setTotalPriceGross(cart.getTotalPriceGross().add(cartItem.getProduct().getPriceGross().multiply(new BigDecimal(cartItem.getAmount()))));
+        cart.setTotalPriceNet(cart.getTotalPriceNet().add(cartItem.getProduct().getPriceNet().multiply(new BigDecimal(cartItem.getAmount()))));
         cart.setTotalItems(cart.getTotalItems() + cartItem.getAmount());
         cart.setUpdatedDate(new Date(System.currentTimeMillis()));
+        cart.getProducts().add(cartItem);
         cartRepository.save(cart);
     }
 

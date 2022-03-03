@@ -28,9 +28,19 @@ public class CartController{
         return cartService.getCartData();
     }
 
-    @PostMapping("/{login}/addItems")
-    public void addItemsToUserCart(@RequestBody CartItemRequest cartItem, @PathVariable String login){
-        log.info("POST cart/" + login + "/adItems");
+    @PostMapping("/{login}/addItem")
+    public void addItemToUserCart(@RequestBody CartItemRequest cartItem, @PathVariable String login){
+        log.info("POST cart/" + login + "/adItem");
         cartService.addItemToCart(cartItem);
+    }
+
+    @DeleteMapping("/{login}/all")
+    public void deleteWholeUserCart(@PathVariable String login){
+        log.info("DELETE cart/" + login + "/all");
+    }
+
+    @DeleteMapping("/{login}/cartItem/{id}")
+    public void deleteWholeUserCart(@PathVariable String login, @PathVariable Long id){
+        log.info("DELETE cart/" + login + "/cartItem/" + id);
     }
 }
