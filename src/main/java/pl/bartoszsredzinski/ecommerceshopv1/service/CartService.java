@@ -70,7 +70,7 @@ public class CartService{
     private boolean findProductInCartAndUpdate(User user, CartItem cartItem){
         Cart cart = user.getCart();
         for(CartItem i : cart.getProducts()){
-            if(i.getProduct().getId() == cartItem.getProduct().getId()){
+            if(i.getProduct().getId().equals(cartItem.getProduct().getId())){
                 i.setAmount(i.getAmount() + cartItem.getAmount());
                 updateCart(cart, cartItem);
 
@@ -108,5 +108,22 @@ public class CartService{
         cart = cartRepository.save(cart);
         user.setCart(cart);
         userRepository.save(user);
+    }
+
+    @Transactional
+    public void deleteUserCart(){
+        User user = authService.getCurrentUser();
+
+        if(user.getCart() != null){
+            Cart cart = user.getCart();
+
+            user.setCart(null);
+            userRepository.save(user);
+
+            cartItemRepository.deleteAll(cart.getProducts());
+            cart.getProducts().clear();
+
+            cartRepository.delete(cart);
+        }
     }
 }

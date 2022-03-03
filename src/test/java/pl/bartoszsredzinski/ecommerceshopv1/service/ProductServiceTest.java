@@ -32,9 +32,7 @@ class ProductServiceTest{
     @BeforeEach
     void init(){
         product1 = Product.builder().category("category1").producerName("producer1").name("Special product").description("").img("").priceNet(new BigDecimal(0)).priceGross(new BigDecimal(5)).build();
-
         product2 = Product.builder().category("category2").producerName("producer2").name("Special product but another").description("").img("").priceNet(new BigDecimal(0)).priceGross(new BigDecimal(10)).build();
-
         product3 = Product.builder().category("category3").producerName("producer3").name("name3 o").description("").img("").priceNet(new BigDecimal(0)).priceGross(new BigDecimal(15)).build();
 
         productRepository.save(product1);

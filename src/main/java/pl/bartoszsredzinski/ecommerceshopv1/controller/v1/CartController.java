@@ -35,12 +35,13 @@ public class CartController{
     }
 
     @DeleteMapping("/{login}/all")
-    public void deleteWholeUserCart(@PathVariable String login){
+    public void deleteUserCart(@PathVariable String login){
         log.info("DELETE cart/" + login + "/all");
+        cartService.deleteUserCart();
     }
 
     @DeleteMapping("/{login}/cartItem/{id}")
-    public void deleteWholeUserCart(@PathVariable String login, @PathVariable Long id){
+    public void deleteCartItem(@PathVariable String login, @PathVariable Long id){
         log.info("DELETE cart/" + login + "/cartItem/" + id);
     }
 }
