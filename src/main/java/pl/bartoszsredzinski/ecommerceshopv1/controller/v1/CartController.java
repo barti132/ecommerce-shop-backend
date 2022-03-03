@@ -23,6 +23,7 @@ public class CartController{
 
     @GetMapping("/{login}")
     public CartDto getCartData(@PathVariable String login){
+        log.info("GET cart/" + login);
         return cartService.getCartData(login);
     }
 

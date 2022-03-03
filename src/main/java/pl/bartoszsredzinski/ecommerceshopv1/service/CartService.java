@@ -2,6 +2,7 @@ package pl.bartoszsredzinski.ecommerceshopv1.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartDto;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.CartMapper;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Cart;
@@ -26,7 +27,10 @@ public class CartService{
 
     public CartDto getCartData(String login){
         User user = authService.getCurrentUser();
-        Cart cart = cartRepository.findByUser(user).orElse(null);
+        if(!user.getLogin().equals(login))
+            return null;
+
+        Cart cart = cartRepository.getFullCartByID(user.getCart().getId());
         if(cart != null){
             return cartMapper.cartToCartDto(cart);
         }

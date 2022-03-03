@@ -37,9 +37,6 @@ public class Cart implements Serializable{
     private BigDecimal totalPriceNet;
     private Integer totalItems;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private List<CartItem> products;
-
-    @OneToOne
-    private User user;
 }
