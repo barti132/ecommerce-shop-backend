@@ -3,7 +3,9 @@ package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Stock;
 import pl.bartoszsredzinski.ecommerceshopv1.service.ProductService;
+import pl.bartoszsredzinski.ecommerceshopv1.service.StockService;
 
 import java.util.List;
 import java.util.Objects;
@@ -19,15 +21,23 @@ import java.util.Objects;
 public class ProductController{
 
     private final ProductService productService;
+    private final StockService stockService;
 
-    public ProductController(ProductService productService){
+    public ProductController(ProductService productService, StockService stockService){
         this.productService = productService;
+        this.stockService = stockService;
     }
 
     @GetMapping("{id}")
     public Product getProductById(@PathVariable Long id){
         log.info("GET products/" + id);
         return productService.findById(id);
+    }
+
+    @GetMapping("{id}/stock")
+    public Stock getProductStock(@PathVariable Long id){
+        log.info("GET products/" + id + "/stock");
+        return stockService.findByProductId(id);
     }
 
     @GetMapping("search")

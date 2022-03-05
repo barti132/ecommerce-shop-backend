@@ -50,7 +50,4 @@ public class Product implements Serializable{
 
     @NotNull
     private BigDecimal priceGross;
-
-    @NotNull
-    private Integer amount;
 }

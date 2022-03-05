@@ -3,7 +3,9 @@ package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Stock;
 import pl.bartoszsredzinski.ecommerceshopv1.service.ProductService;
+import pl.bartoszsredzinski.ecommerceshopv1.service.StockService;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -23,7 +25,8 @@ class ProductControllerTest{
 
     private final Product product = Product.builder().id(1L).category("category1").producerName("producer1").name("name").description("").img("").priceNet(new BigDecimal(0)).priceGross(new BigDecimal(5)).build();
     private final ProductService productService = Mockito.mock(ProductService.class);
-    private final ProductController productController = new ProductController(productService);
+    private final StockService stockService = Mockito.mock(StockService.class);
+    private final ProductController productController = new ProductController(productService, stockService);
 
     @Test
     public void productGetById_should_return_product(){
