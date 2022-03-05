@@ -12,6 +12,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.AuthenticationResponse;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.LoginRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RefreshTokenRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RegisterRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.BadRequestLoginException;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.UserNotFoundException;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.WrongAccountTokenException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.NotificationEmail;
@@ -68,7 +69,7 @@ public class AuthService{
         User user = userRepository.findByLogin(authentication.getName())
                 .orElseThrow(() -> new UserNotFoundException("User name not found - " + authentication.getName()));
         if(!user.getLogin().equals(login)){
-            throw new RuntimeException("Wrong request login!");
+            throw new BadRequestLoginException("Wrong request login!");
         }
         return user;
     }
@@ -111,7 +112,7 @@ public class AuthService{
 
     public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest){
         refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
-        String token = jwtProvider.generateTokenWithLoginAndRole(refreshTokenRequest.getLogin(), getCurrentUser(refreshTokenRequest.getLogin()).getRole());
+        String token = jwtProvider.generateTokenWithLoginAndRole(refreshTokenRequest.getLogin(), userRepository.findByLogin(refreshTokenRequest.getLogin()).get().getRole());
         return new AuthenticationResponse(token, refreshTokenRequest.getRefreshToken());
     }
 }
