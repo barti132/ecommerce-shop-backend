@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.UserNotFoundException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.UserRepository;
 
@@ -30,9 +31,9 @@ public class UserDetailServiceImpl implements UserDetailsService{
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
+    public UserDetails loadUserByUsername(String username){
         Optional<User> userOptional = userRepository.findByLogin(username);
-        User user = userOptional.orElseThrow(() -> new UsernameNotFoundException("User " + username + " not found"));
+        User user = userOptional.orElseThrow(() -> new UserNotFoundException("User " + username + " not found"));
 
         return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), user.isEnabled(),
                 true, true, true, getAuthorities(user.getRole()));

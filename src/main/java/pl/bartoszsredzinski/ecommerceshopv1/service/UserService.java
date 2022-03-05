@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.PasswordDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidAddressIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.UserMapper;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
@@ -50,7 +51,7 @@ public class UserService{
     @Transactional
     public void deleteAddressFromCurrentUser(Long id){
         User user = authService.getCurrentUser();
-        Address address = addressRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid address id"));
+        Address address = addressRepository.findById(id).orElseThrow(() -> new InvalidAddressIdException("Invalid address id"));
         user.getAddresses().remove(address);
         addressRepository.delete(address);
     }

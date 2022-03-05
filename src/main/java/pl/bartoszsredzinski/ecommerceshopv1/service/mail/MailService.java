@@ -8,6 +8,7 @@ import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.SendMailException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.NotificationEmail;
 
 /**
@@ -42,6 +43,7 @@ public class MailService{
         catch(MailException e){
             e.printStackTrace();
             log.info("Activation email wasn't send");
+            throw new SendMailException("Activation email wasn't send");
         }
     }
 }

@@ -3,6 +3,7 @@ package pl.bartoszsredzinski.ecommerceshopv1.service.auth;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidRefreshTokenException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.RefreshToken;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.RefreshTokenRepository;
 
@@ -31,7 +32,7 @@ public class RefreshTokenService{
     }
 
     public void validateRefreshToken(String token){
-        refreshTokenRepository.findByToken(token).orElseThrow(() -> new RuntimeException("Invalid refresh token"));
+        refreshTokenRepository.findByToken(token).orElseThrow(() -> new InvalidRefreshTokenException("Invalid refresh token"));
     }
 
     public void deleteRefreshToken(String token){

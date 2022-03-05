@@ -2,6 +2,7 @@ package pl.bartoszsredzinski.ecommerceshopv1.service;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.ImageNotFoundException;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,7 +24,7 @@ public class ImageService{
             return FileUtils.readFileToByteArray(new File(FILE_PATH_ROOT + name));
         }
         catch(IOException e){
-            throw new RuntimeException("");
+            throw new ImageNotFoundException("Reading file error");
         }
     }
 }

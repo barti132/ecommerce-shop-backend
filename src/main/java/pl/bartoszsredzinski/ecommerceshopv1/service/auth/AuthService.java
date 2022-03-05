@@ -5,7 +5,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +12,8 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.AuthenticationResponse;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.LoginRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RefreshTokenRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.RegisterRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.UserNotFoundException;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.WrongAccountTokenException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.NotificationEmail;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 import pl.bartoszsredzinski.ecommerceshopv1.model.VerificationToken;
@@ -65,7 +66,7 @@ public class AuthService{
     public User getCurrentUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return userRepository.findByLogin(authentication.getName())
-                .orElseThrow(() -> new UsernameNotFoundException("User name not found - " + authentication.getName()));
+                .orElseThrow(() -> new UserNotFoundException("User name not found - " + authentication.getName()));
     }
 
 
@@ -81,13 +82,16 @@ public class AuthService{
 
     public void verifyAccount(String token){
         Optional<VerificationToken> verificationToken = tokenRepository.findByToken(token);
-        verificationToken.orElseThrow(() -> new RuntimeException("Invalid Token")); //add exception
+        verificationToken.orElseThrow(() -> new WrongAccountTokenException("Invalid Token")); //add exception
         fetchUserAndEnable(verificationToken.get());
     }
 
     private void fetchUserAndEnable(VerificationToken verificationToken){
         String login = verificationToken.getUser().getLogin();
-        User user = userRepository.findByLogin(login).orElseThrow(() -> new RuntimeException("User not found with login - " + login));
+
+        User user = userRepository.findByLogin(login)
+                .orElseThrow(() -> new UserNotFoundException("User not found with login - " + login));
+
         user.setEnabled(true);
         userRepository.save(user);
     }

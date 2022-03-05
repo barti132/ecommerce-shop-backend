@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartItemRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidProductIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.CartMapper;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Cart;
 import pl.bartoszsredzinski.ecommerceshopv1.model.CartItem;
@@ -50,7 +51,7 @@ public class CartService{
         User user = authService.getCurrentUser();
 
         CartItem cartItem = new CartItem();
-        cartItem.setProduct(productRepository.findById(item.getProductId()).orElseThrow(() -> new RuntimeException("Wrong product id")));
+        cartItem.setProduct(productRepository.findById(item.getProductId()).orElseThrow(() -> new InvalidProductIdException("Wrong product id")));
         cartItem.setAmount(item.getAmount());
 
         if(user.getCart() == null){
