@@ -28,22 +28,22 @@ class UserControllerTest{
     public void getCurrentUser_should_return_UserDto(){
         when(userService.getCurrentUserDto()).thenReturn(userDto);
 
-        assertNotNull(userController.getCurrentUser());
+        assertNotNull(userController.getCurrentUser("login"));
     }
 
     @Test
     public void addAddressToCurrentUser_should_return_responseEntity(){
-        assertEquals("Adding address success", userController.addAddressToCurrentUser(new Address()).getBody());
+        assertEquals("Adding address success", userController.addAddressToCurrentUser("login", new Address()).getBody());
     }
 
     @Test
     public void updateCurrentUser_should_return_userDto(){
         when(userService.updateCurrentUser(userDto)).thenReturn(userDto);
-        assertEquals(userDto, userController.updateCurrentUser(userDto));
+        assertEquals(userDto, userController.updateCurrentUser("login", userDto));
     }
 
     @Test
     public void changeUserPassword_should_return_responseEntity(){
-        assertEquals("Changing password success", userController.changeUserPassword(new PasswordDto()).getBody());
+        assertEquals("Changing password success", userController.changeUserPassword("login", new PasswordDto()).getBody());
     }
 }

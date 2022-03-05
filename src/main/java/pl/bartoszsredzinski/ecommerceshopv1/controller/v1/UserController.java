@@ -17,41 +17,41 @@ import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
  * created on 24.02.2022
  */
 @RestController
-@RequestMapping("/api/v1/user")
+@RequestMapping("/api/v1/user/{login}")
 @AllArgsConstructor
 @Slf4j
 public class UserController{
 
     private final UserService userService;
 
-    @GetMapping("/currentUser")
-    public UserDto getCurrentUser(){
-        log.info("GET user/currentUser");
+    @GetMapping()
+    public UserDto getCurrentUser(@PathVariable String login){
+        log.info("GET user/" + login);
         return userService.getCurrentUserDto();
     }
 
-    @PostMapping("/addAddress")
-    public ResponseEntity<String> addAddressToCurrentUser(@RequestBody Address address){
-        log.info("POST user/addAddressToCurrentUser");
+    @PostMapping("/add-address")
+    public ResponseEntity<String> addAddressToCurrentUser(@PathVariable String login, @RequestBody Address address){
+        log.info("POST user/" + login + "/add-address");
         userService.addAddressToCurrentUser(address);
         return new ResponseEntity<>("Adding address success", HttpStatus.OK);
     }
 
     @DeleteMapping("/address/{id}")
-    public void deleteAddressByIdFromCurrentUser(@PathVariable Long id){
-        log.info("DELETE user/address/" + id);
+    public void deleteAddressByIdFromCurrentUser(@PathVariable String login, @PathVariable Long id){
+        log.info("DELETE user/" + login + "/address/" + id);
         userService.deleteAddressFromCurrentUser(id);
     }
 
     @PutMapping("/update")
-    public UserDto updateCurrentUser(@RequestBody UserDto userDto){
-        log.info("Put user/update");
+    public UserDto updateCurrentUser(@PathVariable String login, @RequestBody UserDto userDto){
+        log.info("Put user/" + login + "/update");
         return userService.updateCurrentUser(userDto);
     }
 
-    @PutMapping("/changePassword")
-    public ResponseEntity<String> changeUserPassword(@RequestBody PasswordDto passwordDto){
-        log.info("PUT user/changePassword");
+    @PutMapping("/change-password")
+    public ResponseEntity<String> changeUserPassword(@PathVariable String login, @RequestBody PasswordDto passwordDto){
+        log.info("PUT user/" + login + "/change-password");
         userService.changePassword(passwordDto);
         return new ResponseEntity<>("Changing password success", HttpStatus.OK);
     }

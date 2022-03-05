@@ -17,7 +17,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.model.NotificationEmail;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 import pl.bartoszsredzinski.ecommerceshopv1.model.VerificationToken;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.VerificationTokenRepository;
-import pl.bartoszsredzinski.ecommerceshopv1.security.JwtProvider;
+import pl.bartoszsredzinski.ecommerceshopv1.service.security.JwtProvider;
 import pl.bartoszsredzinski.ecommerceshopv1.service.mail.MailService;
 
 import java.util.Optional;
@@ -58,7 +58,7 @@ public class AuthService{
         String token = generateVerificationToken(user);
         mailService.sendMail(new NotificationEmail("Please active your account", user.getEmail(),
                 "Thank you for signing up.\n Please click on the below url to activate your" +
-                        " account: http://localhost:8080/api/v1/auth/accountVerification/" + token));
+                        " account: http://localhost:8080/api/v1/auth/account-verification/" + token));
     }
 
     @Transactional(readOnly = true)

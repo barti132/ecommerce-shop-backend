@@ -41,9 +41,9 @@ public class AuthController{
     }
 
     @Transactional
-    @GetMapping("/accountVerification/{token}")
+    @GetMapping("/account-verification/{token}")
     public ResponseEntity<String> verifyAccount(@PathVariable String token){
-        log.info("GET auth/accountVerification/{token}");
+        log.info("GET auth/account-verification/{token}");
         authService.verifyAccount(token);
         return new ResponseEntity<>("Account activated successfully", OK);
     }

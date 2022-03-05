@@ -18,7 +18,12 @@ public class ImageService{
 
     private final String FILE_PATH_ROOT = "C:\\workspaceIntellij\\ecommerceshopv1\\src\\main\\resources\\images\\";
 
-    public byte[] getImageFromServer(String name) throws IOException{
-        return FileUtils.readFileToByteArray(new File(FILE_PATH_ROOT + name));
+    public byte[] getImageFromServer(String name){
+        try{
+            return FileUtils.readFileToByteArray(new File(FILE_PATH_ROOT + name));
+        }
+        catch(IOException e){
+            throw new RuntimeException("");
+        }
     }
 }

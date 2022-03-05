@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1.security;
+package pl.bartoszsredzinski.ecommerceshopv1.service.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
