@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.test.context.ActiveProfiles;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.UserNotFoundException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.UserRepository;
 
@@ -49,8 +49,8 @@ class UserDetailServiceImplTest{
 
     @Test
     public void loadUserByUsername_should_throw_exception(){
-        assertThrows(UsernameNotFoundException.class, ()-> userDetailService.loadUserByUsername("login"));
-        assertThrows(UsernameNotFoundException.class, ()-> userDetailService.loadUserByUsername("username"));
+        assertThrows(UserNotFoundException.class, ()-> userDetailService.loadUserByUsername("login"));
+        assertThrows(UserNotFoundException.class, ()-> userDetailService.loadUserByUsername("username"));
     }
 
 }

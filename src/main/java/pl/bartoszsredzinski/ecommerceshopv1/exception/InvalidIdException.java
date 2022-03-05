@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  */
 
 @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-public class InvalidAddressIdException extends RuntimeException{
-    public InvalidAddressIdException(String message){
+public class InvalidIdException extends RuntimeException{
+    public InvalidIdException(String message){
         super(message);
     }
 }

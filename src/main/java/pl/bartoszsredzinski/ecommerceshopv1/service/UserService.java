@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.PasswordDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
-import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidAddressIdException;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.UserMapper;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
@@ -31,14 +31,14 @@ public class UserService{
     private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
-    public UserDto getCurrentUserDto(){
-        User user = authService.getCurrentUser();
+    public UserDto getCurrentUserDto(String login){
+        User user = authService.getCurrentUser(login);
         return userMapper.userToUserDto(user);
     }
 
     @Transactional
-    public void addAddressToCurrentUser(Address address){
-        User user = authService.getCurrentUser();
+    public void addAddressToCurrentUser(String login, Address address){
+        User user = authService.getCurrentUser(login);
         Address add = Address.builder().address(address.getAddress()).city(address.getCity())
                 .country(address.getCountry()).postalCode(address.getPostalCode()).build();
 
@@ -49,16 +49,18 @@ public class UserService{
     }
 
     @Transactional
-    public void deleteAddressFromCurrentUser(Long id){
-        User user = authService.getCurrentUser();
-        Address address = addressRepository.findById(id).orElseThrow(() -> new InvalidAddressIdException("Invalid address id"));
-        user.getAddresses().remove(address);
-        addressRepository.delete(address);
+    public void deleteAddressFromCurrentUser(String login, Long id){
+        User user = authService.getCurrentUser(login);
+        Address address = addressRepository.findById(id).orElseThrow(() -> new InvalidIdException("Invalid address id"));
+
+        if(user.getAddresses().remove(address)){
+            addressRepository.delete(address);
+        }
     }
 
     @Transactional
-    public UserDto updateCurrentUser(UserDto userDto){
-        User user = authService.getCurrentUser();
+    public UserDto updateCurrentUser(String login, UserDto userDto){
+        User user = authService.getCurrentUser(login);
         user.setEmail(userDto.getEmail());
         user.setLogin(userDto.getLogin());
         user.setLastName(userDto.getLastName());
@@ -70,8 +72,8 @@ public class UserService{
     }
 
     @Transactional
-    public void changePassword(PasswordDto passwordDto){
-        User user = authService.getCurrentUser();
+    public void changePassword(String login, PasswordDto passwordDto){
+        User user = authService.getCurrentUser(login);
         user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
         userRepository.save(user);
     }

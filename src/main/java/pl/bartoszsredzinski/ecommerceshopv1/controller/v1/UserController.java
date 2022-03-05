@@ -27,32 +27,32 @@ public class UserController{
     @GetMapping()
     public UserDto getCurrentUser(@PathVariable String login){
         log.info("GET user/" + login);
-        return userService.getCurrentUserDto();
+        return userService.getCurrentUserDto(login);
     }
 
     @PostMapping("/add-address")
     public ResponseEntity<String> addAddressToCurrentUser(@PathVariable String login, @RequestBody Address address){
         log.info("POST user/" + login + "/add-address");
-        userService.addAddressToCurrentUser(address);
+        userService.addAddressToCurrentUser(login, address);
         return new ResponseEntity<>("Adding address success", HttpStatus.OK);
     }
 
     @DeleteMapping("/address/{id}")
     public void deleteAddressByIdFromCurrentUser(@PathVariable String login, @PathVariable Long id){
         log.info("DELETE user/" + login + "/address/" + id);
-        userService.deleteAddressFromCurrentUser(id);
+        userService.deleteAddressFromCurrentUser(login, id);
     }
 
     @PutMapping("/update")
     public UserDto updateCurrentUser(@PathVariable String login, @RequestBody UserDto userDto){
         log.info("Put user/" + login + "/update");
-        return userService.updateCurrentUser(userDto);
+        return userService.updateCurrentUser(login, userDto);
     }
 
     @PutMapping("/change-password")
     public ResponseEntity<String> changeUserPassword(@PathVariable String login, @RequestBody PasswordDto passwordDto){
         log.info("PUT user/" + login + "/change-password");
-        userService.changePassword(passwordDto);
+        userService.changePassword(login, passwordDto);
         return new ResponseEntity<>("Changing password success", HttpStatus.OK);
     }
 }

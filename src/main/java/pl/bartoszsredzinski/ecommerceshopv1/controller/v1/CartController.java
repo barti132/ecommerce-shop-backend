@@ -24,24 +24,24 @@ public class CartController{
     @GetMapping("/{login}")
     public CartDto getCartData(@PathVariable String login){
         log.info("GET cart/" + login);
-        return cartService.getCartData();
+        return cartService.getCartData(login);
     }
 
     @PostMapping("/{login}/addItem")
     public void addItemToUserCart(@RequestBody CartItemRequest cartItem, @PathVariable String login){
         log.info("POST cart/" + login + "/adItem");
-        cartService.addItemToCart(cartItem);
+        cartService.addItemToCart(login, cartItem);
     }
 
     @DeleteMapping("/{login}/all")
     public void deleteUserCart(@PathVariable String login){
         log.info("DELETE cart/" + login + "/all");
-        cartService.deleteUserCart();
+        cartService.deleteUserCart(login);
     }
 
     @DeleteMapping("/{login}/cartItem/{id}")
     public void deleteCartItem(@PathVariable String login, @PathVariable Integer id){
         log.info("DELETE cart/" + login + "/cartItem/" + id);
-        cartService.deleteCartItemFromUserCart(id);
+        cartService.deleteCartItemFromUserCart(login, id);
     }
 }

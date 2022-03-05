@@ -26,7 +26,7 @@ class UserControllerTest{
 
     @Test
     public void getCurrentUser_should_return_UserDto(){
-        when(userService.getCurrentUserDto()).thenReturn(userDto);
+        when(userService.getCurrentUserDto("login")).thenReturn(userDto);
 
         assertNotNull(userController.getCurrentUser("login"));
     }
@@ -38,7 +38,7 @@ class UserControllerTest{
 
     @Test
     public void updateCurrentUser_should_return_userDto(){
-        when(userService.updateCurrentUser(userDto)).thenReturn(userDto);
+        when(userService.updateCurrentUser("login", userDto)).thenReturn(userDto);
         assertEquals(userDto, userController.updateCurrentUser("login", userDto));
     }
 

@@ -63,10 +63,14 @@ public class AuthService{
     }
 
     @Transactional(readOnly = true)
-    public User getCurrentUser() {
+    public User getCurrentUser(String login) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return userRepository.findByLogin(authentication.getName())
+        User user = userRepository.findByLogin(authentication.getName())
                 .orElseThrow(() -> new UserNotFoundException("User name not found - " + authentication.getName()));
+        if(!user.getLogin().equals(login)){
+            throw new RuntimeException("Wrong request login!");
+        }
+        return user;
     }
 
 
@@ -107,7 +111,7 @@ public class AuthService{
 
     public AuthenticationResponse refreshToken(RefreshTokenRequest refreshTokenRequest){
         refreshTokenService.validateRefreshToken(refreshTokenRequest.getRefreshToken());
-        String token = jwtProvider.generateTokenWithLoginAndRole(refreshTokenRequest.getLogin(), getCurrentUser().getRole());
+        String token = jwtProvider.generateTokenWithLoginAndRole(refreshTokenRequest.getLogin(), getCurrentUser(refreshTokenRequest.getLogin()).getRole());
         return new AuthenticationResponse(token, refreshTokenRequest.getRefreshToken());
     }
 }
