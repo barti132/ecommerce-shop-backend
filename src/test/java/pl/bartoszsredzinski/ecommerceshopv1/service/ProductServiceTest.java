@@ -80,6 +80,17 @@ class ProductServiceTest{
 
         products = productService.findProductByCriteria("name3", "category3", "producer3", "15", "20");
         assertEquals(1, products.size());
+    }
 
+    @Test
+    public void findById_should_return_product(){
+        assertEquals("name3 o", productService.findById(3L).getName());
+        assertNotNull(productService.findById(1L));
+    }
+
+    @Test
+    public void findById_should_return_null(){
+        assertNull(productService.findById(-1L));
+        assertNull(productService.findById(4L));
     }
 }

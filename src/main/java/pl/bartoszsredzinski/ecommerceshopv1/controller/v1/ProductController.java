@@ -1,9 +1,7 @@
 package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
 import pl.bartoszsredzinski.ecommerceshopv1.service.ProductService;
 
@@ -45,12 +43,7 @@ public class ProductController{
     @GetMapping("random")
     public List<Product> getRandomProducts(@RequestParam(required = false) Integer limit){
         log.info("GET products/random?limit=" + limit);
-
-        try{
-            return productService.getRandomProducts(Objects.requireNonNullElse(limit, 6));
-        }catch(ArrayIndexOutOfBoundsException e){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        }
+        return productService.getRandomProducts(Objects.requireNonNullElse(limit, 6));
     }
 
     @GetMapping("{category}/producers")

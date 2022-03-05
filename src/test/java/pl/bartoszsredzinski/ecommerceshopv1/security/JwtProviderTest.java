@@ -8,7 +8,7 @@ import org.springframework.test.context.ActiveProfiles;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Class description
+ * JWT provider test
  *
  * @author Bartosz Średziński
  * created on 01.03.2022
@@ -24,6 +24,5 @@ class JwtProviderTest{
     public void generateTokenWithLoginAndRole_should_work(){
         assertNotNull(jwtProvider.generateTokenWithLoginAndRole("login", "user"));
         assertTrue(jwtProvider.generateTokenWithLoginAndRole("login1", "user").length() > 400);
-        assertNotNull(jwtProvider.generateTokenWithLoginAndRole("login2", "admin").length());
     }
 }

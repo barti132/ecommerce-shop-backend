@@ -23,7 +23,7 @@ public class ProductService{
     }
 
 
-    public List<Product> getRandomProducts(Integer limit) throws ArrayIndexOutOfBoundsException{
+    public List<Product> getRandomProducts(Integer limit){
         int productsNumber = (int) repository.count();
 
         if(productsNumber < limit || limit < 1){
