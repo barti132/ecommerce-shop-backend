@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartItemRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.OrderRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.service.CartService;
 
 /**
@@ -27,9 +28,9 @@ public class CartController{
         return cartService.getCartData(login);
     }
 
-    @PostMapping("/{login}/addItem")
+    @PostMapping("/{login}/add-item")
     public void addItemToUserCart(@RequestBody CartItemRequest cartItem, @PathVariable String login){
-        log.info("POST cart/" + login + "/adItem");
+        log.info("POST cart/" + login + "/additem");
         cartService.addItemToCart(login, cartItem);
     }
 
@@ -43,5 +44,11 @@ public class CartController{
     public void deleteCartItem(@PathVariable String login, @PathVariable Integer id){
         log.info("DELETE cart/" + login + "/cartItem/" + id);
         cartService.deleteCartItemFromUserCart(login, id);
+    }
+
+    @PostMapping("/{login}/make-order")
+    public void makeOrder(@PathVariable String login, @RequestBody OrderRequest request){
+        log.info("POST cart/" + login + "/make-order");
+        cartService.makeOrder(login, request.getAddressId());
     }
 }

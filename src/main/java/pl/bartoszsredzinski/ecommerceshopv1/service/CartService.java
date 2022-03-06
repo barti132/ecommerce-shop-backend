@@ -3,22 +3,19 @@ package pl.bartoszsredzinski.ecommerceshopv1.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.bartoszsredzinski.ecommerceshopv1.PDFGenerator;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartItemRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.CartMapper;
-import pl.bartoszsredzinski.ecommerceshopv1.model.Cart;
-import pl.bartoszsredzinski.ecommerceshopv1.model.CartItem;
-import pl.bartoszsredzinski.ecommerceshopv1.model.User;
-import pl.bartoszsredzinski.ecommerceshopv1.repository.CartItemRepository;
-import pl.bartoszsredzinski.ecommerceshopv1.repository.CartRepository;
-import pl.bartoszsredzinski.ecommerceshopv1.repository.ProductRepository;
-import pl.bartoszsredzinski.ecommerceshopv1.repository.UserRepository;
+import pl.bartoszsredzinski.ecommerceshopv1.model.*;
+import pl.bartoszsredzinski.ecommerceshopv1.repository.*;
 import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Cart service
@@ -33,8 +30,12 @@ public class CartService{
     private final CartItemRepository cartItemRepository;
     private final ProductRepository productRepository;
     private final UserRepository userRepository;
+    private final AddressRepository addressRepository;
+    private final StockRepository stockRepository;
+    private final InvoiceRepository invoiceRepository;
     private final AuthService authService;
     private final CartMapper cartMapper;
+    private final PDFGenerator pdfGenerator;
 
     public CartDto getCartData(String login){
         User user = authService.getCurrentUser(login);
@@ -142,6 +143,59 @@ public class CartService{
             cart.getProducts().remove(item);
             cartItemRepository.delete(item);
             cartRepository.save(cart);
+        }
+    }
+
+    @Transactional
+    public void makeOrder(String login, Long addressId){
+        User user = authService.getCurrentUser(login);
+        Address address = addressRepository.findById(addressId).orElseThrow(() -> new InvalidIdException("Invalid address id"));
+        Cart cart = user.getCart();
+
+        validateCartItems(cart.getProducts());
+
+        updateStock(cart.getProducts());
+
+        Invoice invoice = createInvoice(user, address, cart);
+        pdfGenerator.generateOrderInvoicePDF(invoice);
+        System.out.println("Success");
+    }
+
+    private Invoice createInvoice(User user, Address address, Cart cart){
+        Invoice invoice = new Invoice();
+
+        invoice.setInvoiceDate(new Date(System.currentTimeMillis()));
+        invoice.setAddress(address);
+        invoice.setProducts(cart.getProducts());
+        invoice.setUser(user);
+        invoice.setTotalItems(cart.getTotalItems());
+        invoice.setTotalPriceGross(cart.getTotalPriceGross());
+        invoice.setTotalPriceNet(cart.getTotalPriceNet());
+
+        invoiceRepository.save(invoice);
+
+        cart.setProducts(new ArrayList<>());
+        user.setCart(null);
+        userRepository.save(user);
+        cartRepository.delete(cart);
+
+        return invoice;
+    }
+
+    private void updateStock(List<CartItem> products){
+        for(CartItem item: products){
+            Stock stock = stockRepository.findByProduct(item.getProduct()).orElseThrow(()-> new RuntimeException("Wrong product"));
+            stock.setAmount(stock.getAmount() - item.getAmount());
+            stock.setUpdatedDate(new Date(System.currentTimeMillis()));
+        }
+    }
+
+    private void validateCartItems(List<CartItem> products){
+        for(CartItem item: products){
+            Stock stock = stockRepository.findByProduct(item.getProduct()).orElseThrow(()-> new RuntimeException("Wrong product"));
+            if(item.getAmount() > stock.getAmount()){
+                throw new RuntimeException("Invalid amount of product - " + item.getProduct().getName());
+            }
         }
     }
 }

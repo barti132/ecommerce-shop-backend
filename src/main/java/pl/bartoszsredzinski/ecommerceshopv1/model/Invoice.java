@@ -15,23 +15,28 @@ import java.util.List;
 import static javax.persistence.GenerationType.IDENTITY;
 
 /**
- * Cart model
+ * Class description
  *
  * @author Bartosz Średziński
- * created on 02.03.2022
+ * created on 06.03.2022
  */
-
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cart implements Serializable{
+public class Invoice implements Serializable{
     @Id
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    private Date updatedDate;
+    private Date InvoiceDate;
+
+    @OneToOne
+    private User user;
+
+    @OneToOne
+    private Address address;
 
     private BigDecimal totalPriceGross;
 
@@ -39,6 +44,6 @@ public class Cart implements Serializable{
 
     private Integer totalItems;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true)
     private List<CartItem> products = new ArrayList<>();
 }
