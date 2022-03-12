@@ -1,4 +1,4 @@
-package pl.bartoszsredzinski.ecommerceshopv1.dto;
+package pl.bartoszsredzinski.ecommerceshopv1.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.PDFGenerator;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartDto;
-import pl.bartoszsredzinski.ecommerceshopv1.dto.CartItemRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.CartItemRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.CartMapper;
 import pl.bartoszsredzinski.ecommerceshopv1.model.*;

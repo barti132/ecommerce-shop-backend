@@ -15,6 +15,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -30,6 +31,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Configuration of spring security.
@@ -54,11 +56,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http.authorizeHttpRequests(authorize -> authorize
-                .antMatchers("/api/v1/auth/**", "/api/v1/image/**", "/api/v1/products/**", "/h2-console/**")
+                .antMatchers("/api/v1/auth/**",
+                        "/api/v1/image/**",
+                        "/api/v1/products/**",
+                        "/h2-console/**",
+                        "/swagger-resources/**",
+                        "/v2/api-docs",
+                        "/swagger-ui/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated())
-                .oauth2ResourceServer(oauth -> oauth.jwt())
+                .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         http.cors().configurationSource(corsConfigurationSource());
@@ -69,7 +77,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOriginPatterns(Arrays.asList("*"));
+        configuration.setAllowedOriginPatterns(List.of("*"));
         configuration.setAllowedMethods(Arrays.asList("HEAD", "GET", "PUT", "POST", "DELETE", "PATCH", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.addAllowedOrigin("localhost:4200");
@@ -104,8 +112,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     @Bean
     JwtEncoder jwtEncoder() {
-        JWK jwk = new RSAKey.Builder(this.publicKey).privateKey(this.privateKey).build();
-        JWKSource<SecurityContext> jwks = new ImmutableJWKSet<>(new JWKSet(jwk));
-        return new NimbusJwtEncoder(jwks);
+        JWK JWK = new RSAKey.Builder(this.publicKey).privateKey(this.privateKey).build();
+        JWKSource<SecurityContext> JWKs = new ImmutableJWKSet<>(new JWKSet(JWK));
+        return new NimbusJwtEncoder(JWKs);
     }
 }

@@ -5,7 +5,6 @@ This backend repository is part of my ecommerce shop project. In this project I'
 * [Description](#description)
 * [Technologies](#technologies)
 * [Usage](#usage)
-* [Endpoints](#endpoints)
 
 ## Description
 I am creating online shop, based on angular and spring boot. (Work in progess)
@@ -20,13 +19,3 @@ I am creating online shop, based on angular and spring boot. (Work in progess)
 
 ## Usage
 You need JDK 17 or higher(previous versions are not tested).  
-
-## Endpoints
-### Images
-* #### GET /api/v1/image/{filename}
-     return an image with given filename
-### Product
-* #### GET /api/v1/product/{id}
-  return product with id
-* #### GET /api/v1/products?name=""&category=""
-  return list of products with given name and category

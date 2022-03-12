@@ -6,8 +6,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartDto;
-import pl.bartoszsredzinski.ecommerceshopv1.dto.CartItemRequest;
-import pl.bartoszsredzinski.ecommerceshopv1.dto.OrderRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.CartItemRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.OrderRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.service.CartService;
 
 /**
