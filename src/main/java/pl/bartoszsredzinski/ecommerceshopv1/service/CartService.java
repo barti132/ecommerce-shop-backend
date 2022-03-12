@@ -147,7 +147,7 @@ public class CartService{
     }
 
     @Transactional
-    public void makeOrder(String login, Long addressId){
+    public byte[] makeOrder(String login, Long addressId){
         User user = authService.getCurrentUser(login);
         Address address = addressRepository.findById(addressId).orElseThrow(() -> new InvalidIdException("Invalid address id"));
         Cart cart = user.getCart();
@@ -157,8 +157,7 @@ public class CartService{
         updateStock(cart.getProducts());
 
         Invoice invoice = createInvoice(user, address, cart);
-        pdfGenerator.generateOrderInvoicePDF(invoice);
-        System.out.println("Success");
+        return pdfGenerator.generateOrderInvoicePDF(invoice);
     }
 
     private Invoice createInvoice(User user, Address address, Cart cart){

@@ -7,7 +7,7 @@ import org.thymeleaf.context.Context;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.CreateInvoiceException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Invoice;
 
-import java.io.FileOutputStream;
+import java.io.*;
 
 /**
  * PDF generator
@@ -17,7 +17,6 @@ import java.io.FileOutputStream;
  */
 @Component
 public class PDFGenerator{
-
 
     private final TemplateEngine templateEngine;
 
@@ -34,10 +33,12 @@ public class PDFGenerator{
         return templateEngine.process("invoiceTemplate", context);
     }
 
-    public void generateOrderInvoicePDF(Invoice invoice){
+    public byte[] generateOrderInvoicePDF(Invoice invoice){
         String invoiceHtml = generateInvoiceHtml(invoice);
         try{
-            HtmlConverter.convertToPdf(invoiceHtml, new FileOutputStream("test.pdf"));
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            HtmlConverter.convertToPdf(invoiceHtml, out);
+            return out.toByteArray();
         }catch(Exception e){
             throw new CreateInvoiceException("Error while creating pdf");
         }

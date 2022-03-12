@@ -16,19 +16,43 @@
             </h2>
         </div>
         <div>
-            <div class="text-xl font-bold" th:text="${invoice.getId()}"></div>
+            <div class="text-xl font-bold" th:text="${invoice.getInvoiceDate()}"></div>
         </div>
     </div>
-    <div class="flex flex-col pb-8">
-        <div class="pb-2">
-            <h2 class="text-xl font-bold">Delivery Address</h2>
-        </div>
-        <div th:text="${address.getCountry()}"></div>
-        <div th:text="${address.getCity()}"></div>
-        <div th:text="${address.getAddress()}"></div>
-        <div th:text="${address.getPostalCode()}"></div>
+    <div class="flex flex-row">
+        <div class="flex-col pb-8">
+            <div class="pb-2">
+                <h2 class="text-xl font-bold">Delivery Address</h2>
+            </div>
+            <div th:text="${address.getCountry()}">country</div>
+            <div th:text="${address.getCity()}">city</div>
+            <div th:text="${address.getAddress()}">address</div>
+            <div th:text="${address.getPostalCode()}">postalcode</div>
 
+        </div>
+        <div class="flex-col" style="margin-bottom: 20px">
+            <h2 class="text-xl font-bold">Client Details</h2>
+            <table class="table-fixed text-left w-2/6 border">
+                <tr>
+                    <th class="text-green-600">First name:</th>
+                    <td th:text="${user.getName()}">name</td>
+                </tr>
+                <tr>
+                    <th class="text-green-600">Last name:</th>
+                    <td th:text="${user.getLastName()}">lastname</td>
+                </tr>
+                <tr>
+                    <th class="text-green-600">Email address:</th>
+                    <td th:text="${user.getEmail()}">email</td>
+                </tr>
+                <tr>
+                    <th class="text-green-600">Phone number:</th>
+                    <td th:text="${user.getPhoneNumber()}">123456789</td>
+                </tr>
+            </table>
+        </div>
     </div>
+
     <table class="table-fixed w-full text-right border rounded">
         <thead class="bg-gray-100">
         <tr>
@@ -54,25 +78,6 @@
             Grand Total: <span class="text-green-600" th:text="${invoice.getTotalPriceGross()}"></span>
         </h2>
     </div>
-    <h2 class="text-xl font-bold">Client Details</h2>
-    <table class="table-fixed text-left w-2/6 border">
-        <tr>
-            <th class="text-green-600">First name</th>
-            <td th:text="${user.getName()}"></td>
-        </tr>
-        <tr>
-            <th class="text-green-600">Last name</th>
-            <td th:text="${user.getLastName()}"></td>
-        </tr>
-        <tr>
-            <th class="text-green-600">Email address</th>
-            <td th:text="${user.getEmail()}"></td>
-        </tr>
-        <tr>
-            <th class="text-green-600">Phone number</th>
-            <td th:text="${user.getPhoneNumber()}"></td>
-        </tr>
-    </table>
 </div>
 </body>
 </html>

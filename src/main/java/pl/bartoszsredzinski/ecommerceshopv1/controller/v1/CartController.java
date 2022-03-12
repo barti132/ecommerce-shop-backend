@@ -2,6 +2,8 @@ package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartItemRequest;
@@ -47,8 +49,9 @@ public class CartController{
     }
 
     @PostMapping("/{login}/make-order")
-    public void makeOrder(@PathVariable String login, @RequestBody OrderRequest request){
+    public ResponseEntity<byte[]> makeOrder(@PathVariable String login, @RequestBody OrderRequest request){
         log.info("POST cart/" + login + "/make-order");
-        cartService.makeOrder(login, request.getAddressId());
+
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(cartService.makeOrder(login, request.getAddressId()));
     }
 }
