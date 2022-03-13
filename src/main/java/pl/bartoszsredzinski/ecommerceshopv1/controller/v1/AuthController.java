@@ -34,7 +34,7 @@ public class AuthController{
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<String> signup(@Valid @RequestBody RegisterRequest registerRequest){
         log.info("POST auth/signup");
         authService.signup(registerRequest);
         return new ResponseEntity<>("User Registration Successful", HttpStatus.CREATED);
@@ -50,7 +50,7 @@ public class AuthController{
 
     @Transactional
     @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest){
+    public AuthenticationResponse login(@Valid @RequestBody LoginRequest loginRequest){
         log.info("GET auth/login");
         return authService.login(loginRequest);
     }

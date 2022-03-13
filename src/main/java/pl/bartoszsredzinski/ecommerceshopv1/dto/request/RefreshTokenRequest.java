@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * Class description
@@ -19,5 +20,8 @@ public class RefreshTokenRequest{
 
     @NotBlank
     private String refreshToken;
+
+    @NotNull
+    @NotBlank(message = "Login is mandatory")
     private String login;
 }

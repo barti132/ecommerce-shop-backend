@@ -10,6 +10,8 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.request.CartItemRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.request.OrderRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.service.CartService;
 
+import javax.validation.Valid;
+
 /**
  * Cart rest controller
  *
@@ -31,7 +33,7 @@ public class CartController{
     }
 
     @PostMapping("/{login}/add-item")
-    public void addItemToUserCart(@RequestBody CartItemRequest cartItem, @PathVariable String login){
+    public void addItemToUserCart(@Valid @RequestBody CartItemRequest cartItem, @PathVariable String login){
         log.info("POST cart/" + login + "/additem");
         cartService.addItemToCart(login, cartItem);
     }
@@ -49,7 +51,7 @@ public class CartController{
     }
 
     @PostMapping("/{login}/make-order")
-    public ResponseEntity<byte[]> makeOrder(@PathVariable String login, @RequestBody OrderRequest request){
+    public ResponseEntity<byte[]> makeOrder(@PathVariable String login, @Valid @RequestBody OrderRequest request){
         log.info("POST cart/" + login + "/make-order");
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(cartService.makeOrder(login, request.getAddressId()));
