@@ -9,6 +9,9 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.request.CartItemRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.CartMapper;
 import pl.bartoszsredzinski.ecommerceshopv1.model.*;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Cart;
+import pl.bartoszsredzinski.ecommerceshopv1.model.CartItem;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.*;
 import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 

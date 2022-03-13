@@ -1,13 +1,12 @@
 package pl.bartoszsredzinski.ecommerceshopv1.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.time.Instant;
 
 /**
@@ -16,8 +15,9 @@ import java.time.Instant;
  * @author Bartosz Średziński
  * created on 26.02.2022
  */
-@Data
 @Entity
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class RefreshToken{
@@ -25,7 +25,9 @@ public class RefreshToken{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private String token;
 
+    @NotNull
     private Instant createdDate;
 }

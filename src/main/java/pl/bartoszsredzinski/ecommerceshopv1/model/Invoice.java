@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -30,20 +31,27 @@ public class Invoice implements Serializable{
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @NotNull
     private Date InvoiceDate;
 
+    @NotNull
     @OneToOne
     private User user;
 
+    @NotNull
     @OneToOne
     private Address address;
 
+    @NotNull
     private BigDecimal totalPriceGross;
 
+    @NotNull
     private BigDecimal totalPriceNet;
 
+    @NotNull
     private Integer totalItems;
 
+    @NotNull
     @OneToMany(orphanRemoval = true)
     private List<CartItem> products = new ArrayList<>();
 }
