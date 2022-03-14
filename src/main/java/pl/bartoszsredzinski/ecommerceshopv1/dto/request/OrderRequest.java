@@ -21,24 +21,19 @@ import javax.validation.constraints.Size;
 public class OrderRequest{
 
     @NotNull
-    @NotBlank(message = "Address is mandatory")
     private Long addressId;
 
-    @NotNull
     @NotBlank(message = "Cart number is mandatory")
     @Size(min = 15, max = 16)
     private String cartNumber;
 
-    @NotNull
     @NotBlank(message = "Name on the card is mandatory")
     private String cardName;
 
-    @NotNull
     @NotBlank(message = "Expriation is mandatory")
     @Pattern(regexp = "([0-9]{2}[/]?){2}")
     private String expiration;
 
-    @NotNull
     @NotBlank(message = "Security code is mandatory")
     @Size(min = 3, max = 4)
     private String securityCode;

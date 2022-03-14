@@ -21,7 +21,6 @@ public class RefreshTokenRequest{
     @NotBlank
     private String refreshToken;
 
-    @NotNull
     @NotBlank(message = "Login is mandatory")
     private String login;
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -50,6 +51,12 @@ public class Invoice implements Serializable{
 
     @NotNull
     private Integer totalItems;
+
+    @NotNull
+    private String cartNumber;
+
+    @NotNull
+    private String cardName;
 
     @NotNull
     @OneToMany(orphanRemoval = true)

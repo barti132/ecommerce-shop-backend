@@ -18,11 +18,10 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LoginRequest{
-    @NotNull
+
     @NotBlank(message = "Login is mandatory")
     private String login;
 
-    @NotNull
     @NotBlank(message = "Password is mandatory")
     private String password;
 }

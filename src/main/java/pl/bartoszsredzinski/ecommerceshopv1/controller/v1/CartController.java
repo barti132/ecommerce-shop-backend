@@ -54,6 +54,6 @@ public class CartController{
     public ResponseEntity<byte[]> makeOrder(@PathVariable String login, @Valid @RequestBody OrderRequest request){
         log.info("POST cart/" + login + "/make-order");
 
-        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(cartService.makeOrder(login, request.getAddressId()));
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(cartService.makeOrder(login, request));
     }
 }

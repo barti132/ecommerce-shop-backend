@@ -20,23 +20,18 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class RegisterRequest{
 
-    @NotNull
     @Email
     private String email;
 
-    @NotNull
     @NotBlank(message = "Login is mandatory")
     private String login;
 
-    @NotNull
     @NotBlank(message = "Password is mandatory")
     private String password;
 
-    @NotNull
     @NotBlank(message = "Name is mandatory")
     private String name;
 
-    @NotNull
     @NotBlank(message = "Last name is mandatory")
     private String lastName;
 }

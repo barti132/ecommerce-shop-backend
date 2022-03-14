@@ -32,7 +32,6 @@ public class Cart implements Serializable{
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @NotNull
     private Date updatedDate;
 
     @NotNull
