@@ -7,9 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.AuthenticationResponse;
-import pl.bartoszsredzinski.ecommerceshopv1.dto.LoginRequest;
-import pl.bartoszsredzinski.ecommerceshopv1.dto.RefreshTokenRequest;
-import pl.bartoszsredzinski.ecommerceshopv1.dto.RegisterRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.LoginRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.RefreshTokenRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.RegisterRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 import pl.bartoszsredzinski.ecommerceshopv1.service.auth.RefreshTokenService;
 
@@ -34,7 +34,7 @@ public class AuthController{
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> signup(@RequestBody RegisterRequest registerRequest){
+    public ResponseEntity<String> signup(@Valid @RequestBody RegisterRequest registerRequest){
         log.info("POST auth/signup");
         authService.signup(registerRequest);
         return new ResponseEntity<>("User Registration Successful", HttpStatus.CREATED);
@@ -50,7 +50,7 @@ public class AuthController{
 
     @Transactional
     @PostMapping("/login")
-    public AuthenticationResponse login(@RequestBody LoginRequest loginRequest){
+    public AuthenticationResponse login(@Valid @RequestBody LoginRequest loginRequest){
         log.info("GET auth/login");
         return authService.login(loginRequest);
     }

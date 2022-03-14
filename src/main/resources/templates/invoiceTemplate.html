@@ -51,6 +51,19 @@
                 </tr>
             </table>
         </div>
+        <div class="flex-col" style="margin-bottom: 20px">
+            <h2 class="text-xl font-bold">Payment method - credit card: </h2>
+            <table class="table-fixed text-left w-2/6 border">
+                <tr>
+                    <th class="text-green-600">Card number:</th>
+                    <td th:text="${invoice.getCartNumber()}">number</td>
+                </tr>
+                <tr>
+                    <th class="text-green-600">Name on card:</th>
+                    <td th:text="${invoice.getCardName()}">name</td>
+                </tr>
+            </table>
+        </div>
     </div>
 
     <table class="table-fixed w-full text-right border rounded">

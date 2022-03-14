@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -33,12 +34,16 @@ public class Cart implements Serializable{
 
     private Date updatedDate;
 
+    @NotNull
     private BigDecimal totalPriceGross;
 
+    @NotNull
     private BigDecimal totalPriceNet;
 
+    @NotNull
     private Integer totalItems;
 
+    @NotNull
     @OneToMany
     private List<CartItem> products = new ArrayList<>();
 }

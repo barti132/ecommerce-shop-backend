@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 import static javax.persistence.GenerationType.IDENTITY;
@@ -29,8 +31,10 @@ public class CartItem implements Serializable{
     @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
+    @NotNull
     @OneToOne
     private Product product;
 
+    @NotNull
     private Integer amount;
 }

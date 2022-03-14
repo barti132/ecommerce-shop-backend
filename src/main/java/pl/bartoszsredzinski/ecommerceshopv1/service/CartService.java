@@ -5,10 +5,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.PDFGenerator;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.CartDto;
-import pl.bartoszsredzinski.ecommerceshopv1.dto.CartItemRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.CartItemRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.OrderRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.CartMapper;
 import pl.bartoszsredzinski.ecommerceshopv1.model.*;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Cart;
+import pl.bartoszsredzinski.ecommerceshopv1.model.CartItem;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.*;
 import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
 
@@ -147,20 +151,20 @@ public class CartService{
     }
 
     @Transactional
-    public byte[] makeOrder(String login, Long addressId){
+    public byte[] makeOrder(String login, OrderRequest orderRequest){
         User user = authService.getCurrentUser(login);
-        Address address = addressRepository.findById(addressId).orElseThrow(() -> new InvalidIdException("Invalid address id"));
+        Address address = addressRepository.findById(orderRequest.getAddressId()).orElseThrow(() -> new InvalidIdException("Invalid address id"));
         Cart cart = user.getCart();
 
         validateCartItems(cart.getProducts());
 
         updateStock(cart.getProducts());
 
-        Invoice invoice = createInvoice(user, address, cart);
+        Invoice invoice = createInvoice(user, address, cart, orderRequest);
         return pdfGenerator.generateOrderInvoicePDF(invoice);
     }
 
-    private Invoice createInvoice(User user, Address address, Cart cart){
+    private Invoice createInvoice(User user, Address address, Cart cart, OrderRequest orderRequest){
         Invoice invoice = new Invoice();
 
         invoice.setInvoiceDate(new Date(System.currentTimeMillis()));
@@ -170,6 +174,8 @@ public class CartService{
         invoice.setTotalItems(cart.getTotalItems());
         invoice.setTotalPriceGross(cart.getTotalPriceGross());
         invoice.setTotalPriceNet(cart.getTotalPriceNet());
+        invoice.setCartNumber(orderRequest.getCartNumber());
+        invoice.setCardName(orderRequest.getCardName());
 
         invoiceRepository.save(invoice);
 

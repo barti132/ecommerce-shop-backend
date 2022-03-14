@@ -10,6 +10,8 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
 import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
 
+import javax.validation.Valid;
+
 /**
  * User rest controller
  *
@@ -31,7 +33,7 @@ public class UserController{
     }
 
     @PostMapping("/add-address")
-    public ResponseEntity<String> addAddressToCurrentUser(@PathVariable String login, @RequestBody Address address){
+    public ResponseEntity<String> addAddressToCurrentUser(@PathVariable String login, @Valid @RequestBody Address address){
         log.info("POST user/" + login + "/add-address");
         userService.addAddressToCurrentUser(login, address);
         return new ResponseEntity<>("Adding address success", HttpStatus.OK);
@@ -44,13 +46,13 @@ public class UserController{
     }
 
     @PutMapping("/update")
-    public UserDto updateCurrentUser(@PathVariable String login, @RequestBody UserDto userDto){
+    public UserDto updateCurrentUser(@PathVariable String login, @Valid @RequestBody UserDto userDto){
         log.info("Put user/" + login + "/update");
         return userService.updateCurrentUser(login, userDto);
     }
 
     @PutMapping("/change-password")
-    public ResponseEntity<String> changeUserPassword(@PathVariable String login, @RequestBody PasswordDto passwordDto){
+    public ResponseEntity<String> changeUserPassword(@PathVariable String login, @Valid @RequestBody PasswordDto passwordDto){
         log.info("PUT user/" + login + "/change-password");
         userService.changePassword(login, passwordDto);
         return new ResponseEntity<>("Changing password success", HttpStatus.OK);
