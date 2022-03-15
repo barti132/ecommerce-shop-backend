@@ -45,7 +45,7 @@ public class InvoiceService{
     public byte[] getInvoicePDF(String login, Long id){
         authService.getCurrentUser(login);
 
-        Invoice invoice = invoiceRepository.findById(id).orElseThrow(() -> new InvalidIdException("Invalid invoice id"));
+        Invoice invoice = invoiceRepository.getFullInvoiceByID(id).orElseThrow(() -> new InvalidIdException("Invalid invoice id"));
 
         return pdfGenerator.generateOrderInvoicePDF(invoice);
     }

@@ -47,7 +47,7 @@ public class CartService{
         if(user.getCart() == null){
             return null;
         }
-        Cart cart = cartRepository.getFullCartByID(user.getCart().getId());
+        Cart cart = cartRepository.getFullCartByID(user.getCart().getId()).orElseThrow(() -> new InvalidIdException("Invalid cart id"));
         return cartMapper.cartToCartDto(cart);
     }
 
