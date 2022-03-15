@@ -8,88 +8,100 @@
     <title>Invoice</title>
     <link href="invoice.css" th:href="@{src/main/resources/templates/invoice.css}" rel="stylesheet"/>
 </head>
-<body class="flex items-center justify-center h-screen">
-<div class="rounded-lg border shadow-lg p-10 w-3/5">
-    <div class="flex flex-row justify-between pb-4">
+<body style="min-width: 100vw; padding: 2.5rem; justify-content: center;">
+<div class="rounded-lg border shadow-lg" style="min-height: 75vh; margin: 10px;">
+    <div style="margin: 2rem">
         <div>
-            <h2 class="text-xl font-bold">Order #<span class="text-green-600" th:text="${invoice.getId()}"></span>
-            </h2>
-        </div>
-        <div>
-            <div class="text-xl font-bold" th:text="${invoice.getInvoiceDate()}"></div>
-        </div>
-    </div>
-    <div class="flex flex-row">
-        <div class="flex-col pb-8">
-            <div class="pb-2">
-                <h2 class="text-xl font-bold">Delivery Address</h2>
+            <div style="float: left; width: 50%">
+                <h3>Order #<b th:text="${invoice.getId()}">123</b></h3>
             </div>
-            <div th:text="${address.getCountry()}">country</div>
-            <div th:text="${address.getCity()}">city</div>
-            <div th:text="${address.getAddress()}">address</div>
-            <div th:text="${address.getPostalCode()}">postalcode</div>
-
+            <div style="float: right; width: 50%">
+                <h3 th:text="${invoice.getInvoiceDate()}">2022-03-01 20:56.11</h3>
+            </div>
         </div>
-        <div class="flex-col" style="margin-bottom: 20px">
-            <h2 class="text-xl font-bold">Client Details</h2>
-            <table class="table-fixed text-left w-2/6 border">
-                <tr>
-                    <th class="text-green-600">First name:</th>
-                    <td th:text="${user.getName()}">name</td>
-                </tr>
-                <tr>
-                    <th class="text-green-600">Last name:</th>
-                    <td th:text="${user.getLastName()}">lastname</td>
-                </tr>
-                <tr>
-                    <th class="text-green-600">Email address:</th>
-                    <td th:text="${user.getEmail()}">email</td>
-                </tr>
-                <tr>
-                    <th class="text-green-600">Phone number:</th>
-                    <td th:text="${user.getPhoneNumber()}">123456789</td>
-                </tr>
-            </table>
+        <div style="margin-bottom: 10px">
+            <div style="float: left; width: 50%;">
+                <h3>Delivery Address</h3>
+                <table class="table-fixed text-left" style="padding: 5px; font-size: 14px">
+                    <tr>
+                        <th>Country:</th>
+                        <td th:text="${address.getCountry()}">country</td>
+                    </tr>
+                    <tr>
+                        <th>City:</th>
+                        <td th:text="${address.getCity()}">city</td>
+                    </tr>
+                    <tr>
+                        <th>Address:</th>
+                        <td th:text="${address.getAddress()}">address</td>
+                    </tr>
+                    <tr>
+                        <th>Postal code:</th>
+                        <td th:text="${address.getPostalCode()}">postal code</td>
+                    </tr>
+                </table>
+            </div>
+            <div style="float: right; width: 50%;">
+                <h3>Client Details</h3>
+                <table class="table-fixed text-left" style="padding: 5px; font-size: 14px">
+                    <tr>
+                        <th>First name:</th>
+                        <td th:text="${user.getName()}">name</td>
+                    </tr>
+                    <tr>
+                        <th>Last name:</th>
+                        <td th:text="${user.getLastName()}">lastname</td>
+                    </tr>
+                    <tr>
+                        <th>Email address:</th>
+                        <td th:text="${user.getEmail()}">email</td>
+                    </tr>
+                    <tr>
+                        <th>Phone number:</th>
+                        <td th:text="${user.getPhoneNumber()}">123456789</td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div class="flex-col" style="margin-bottom: 20px">
-            <h2 class="text-xl font-bold">Payment method - credit card: </h2>
-            <table class="table-fixed text-left w-2/6 border">
+        <div style="margin-bottom: 20px">
+            <h3>Payment method - credit card: </h3>
+            <table class="table-fixed text-left" style="padding: 5px; font-size: 14px">
                 <tr>
-                    <th class="text-green-600">Card number:</th>
+                    <th>Card number:</th>
                     <td th:text="${invoice.getCardNumber()}">number</td>
                 </tr>
                 <tr>
-                    <th class="text-green-600">Name on card:</th>
+                    <th>Name on card:</th>
                     <td th:text="${invoice.getCardName()}">name</td>
                 </tr>
             </table>
         </div>
-    </div>
 
-    <table class="table-fixed w-full text-right border rounded">
-        <thead class="bg-gray-100">
-        <tr>
-            <th class="text-left pl-4">Product</th>
-            <th>Quantity</th>
-            <th>Price net</th>
-            <th>Price gross</th>
-            <th class="pr-4">Total</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="item : ${products}">
-            <td class="pl-4 text-left" th:text="${item.getProduct().getName()}"></td>
-            <td th:text="${item.getAmount()}"></td>
-            <td th:text="${item.getProduct().getPriceNet()}"></td>
-            <td th:text="${item.getProduct().getPriceGross()}"></td>
-            <td class="pr-4" th:text="${item.getProduct().getPriceGross() * item.getAmount()}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="flex flex-row-reverse p-5">
-        <h2 class="font-medium  bg-gray-200 p-2 rounded">
-            Grand Total: <span class="text-green-600" th:text="${invoice.getTotalPriceGross()}"></span>
-        </h2>
+        <table class="table-fixed w-full text-right border rounded">
+            <thead class="bg-gray-100">
+            <tr>
+                <th class="text-left pl-4">Product</th>
+                <th>Quantity</th>
+                <th>Price net</th>
+                <th>Price gross</th>
+                <th class="pr-4">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${products}">
+                <td class="pl-4 text-left" th:text="${item.getProduct().getName()}"></td>
+                <td th:text="${item.getAmount()}"></td>
+                <td th:text="${item.getProduct().getPriceNet()}"></td>
+                <td th:text="${item.getProduct().getPriceGross()}"></td>
+                <td class="pr-4" th:text="${item.getProduct().getPriceGross() * item.getAmount()}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="flex flex-row-reverse p-5">
+            <h3 class="font-medium  bg-gray-200 p-2 rounded">
+                Grand Total: <span th:text="${invoice.getTotalPriceGross()}"></span>
+            </h3>
+        </div>
     </div>
 </div>
 </body>

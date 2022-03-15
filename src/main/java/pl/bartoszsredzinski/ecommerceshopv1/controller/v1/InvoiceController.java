@@ -31,13 +31,13 @@ public class InvoiceController{
 
     @GetMapping("")
     public List<InvoiceDto> getInvoicesHistory(@PathVariable String login){
-        log.info("Get invoices/" + login);
+        log.info("GET invoices/" + login);
         return invoiceService.getAllUserInvoices(login);
     }
 
     @GetMapping("/id/{id}")
     public ResponseEntity<byte[]> getInvoicePdf(@PathVariable String login, @PathVariable Long id){
-        log.info("Get invoices/" + login + "/id/" + id);
+        log.info("GET invoices/" + login + "/id/" + id);
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_PDF).body(invoiceService.getInvoicePDF(login, id));
     }
 }
