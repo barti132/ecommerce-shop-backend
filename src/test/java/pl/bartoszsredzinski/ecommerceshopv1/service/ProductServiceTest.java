@@ -1,6 +1,8 @@
 package pl.bartoszsredzinski.ecommerceshopv1.service;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -25,15 +27,35 @@ class ProductServiceTest{
     @Autowired
     private ProductService productService;
 
-    private Product product1;
-    private Product product2;
-    private Product product3;
-
     @BeforeEach
     void init(){
-        product1 = Product.builder().category("category1").producerName("producer1").name("Special product").description("").img("").priceNet(new BigDecimal(0)).priceGross(new BigDecimal(5)).build();
-        product2 = Product.builder().category("category2").producerName("producer2").name("Special product but another").description("").img("").priceNet(new BigDecimal(0)).priceGross(new BigDecimal(10)).build();
-        product3 = Product.builder().category("category3").producerName("producer3").name("name3 o").description("").img("").priceNet(new BigDecimal(0)).priceGross(new BigDecimal(15)).build();
+        Product product1 = Product.builder()
+                .category("category1")
+                .producerName("producer1")
+                .name("Special product")
+                .description("")
+                .img("")
+                .priceNet(new BigDecimal(0))
+                .priceGross(new BigDecimal(5))
+                .build();
+        Product product2 = Product.builder()
+                .category("category2")
+                .producerName("producer2")
+                .name("Special product but another")
+                .description("")
+                .img("")
+                .priceNet(new BigDecimal(0))
+                .priceGross(new BigDecimal(10))
+                .build();
+        Product product3 = Product.builder()
+                .category("category3")
+                .producerName("producer3")
+                .name("name3 o")
+                .description("")
+                .img("")
+                .priceNet(new BigDecimal(0))
+                .priceGross(new BigDecimal(15))
+                .build();
 
         productRepository.save(product1);
         productRepository.save(product2);

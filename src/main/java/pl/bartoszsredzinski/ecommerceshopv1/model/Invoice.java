@@ -53,7 +53,7 @@ public class Invoice implements Serializable{
     private Integer totalItems;
 
     @NotNull
-    private String cartNumber;
+    private String cardNumber;
 
     @NotNull
     private String cardName;

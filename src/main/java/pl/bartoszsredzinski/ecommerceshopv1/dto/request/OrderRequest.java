@@ -23,9 +23,9 @@ public class OrderRequest{
     @NotNull
     private Long addressId;
 
-    @NotBlank(message = "Cart number is mandatory")
+    @NotBlank(message = "Card number is mandatory")
     @Size(min = 15, max = 16)
-    private String cartNumber;
+    private String cardNumber;
 
     @NotBlank(message = "Name on the card is mandatory")
     private String cardName;

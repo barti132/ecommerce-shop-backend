@@ -47,7 +47,7 @@ public class CartService{
         if(user.getCart() == null){
             return null;
         }
-        Cart cart = cartRepository.getFullCartByID(user.getCart().getId());
+        Cart cart = cartRepository.getFullCartByID(user.getCart().getId()).orElseThrow(() -> new InvalidIdException("Invalid cart id"));
         return cartMapper.cartToCartDto(cart);
     }
 
@@ -174,7 +174,7 @@ public class CartService{
         invoice.setTotalItems(cart.getTotalItems());
         invoice.setTotalPriceGross(cart.getTotalPriceGross());
         invoice.setTotalPriceNet(cart.getTotalPriceNet());
-        invoice.setCartNumber(orderRequest.getCartNumber());
+        invoice.setCardNumber(orderRequest.getCardNumber());
         invoice.setCardName(orderRequest.getCardName());
 
         invoiceRepository.save(invoice);

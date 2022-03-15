@@ -19,8 +19,6 @@ import java.util.ArrayList;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Class description
- *
  * @author Bartosz Średziński
  * created on 04.03.2022
  */
