@@ -30,5 +30,5 @@ public class InvoiceDto{
 
     private Integer totalItems;
 
-    private String cartNumber;
+    private String cardNumber;
 }

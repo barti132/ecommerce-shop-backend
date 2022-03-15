@@ -90,7 +90,7 @@ class InvoiceServiceTest{
         List<InvoiceDto> invoiceDtos = invoiceService.getAllUserInvoices("spring");
 
         assertEquals(2, invoiceDtos.size());
-        assertEquals("abc1", invoiceDtos.get(0).getCartNumber());
+        assertEquals("abc1", invoiceDtos.get(0).getCardNumber());
     }
 
     @WithMockUser(username = "spring")

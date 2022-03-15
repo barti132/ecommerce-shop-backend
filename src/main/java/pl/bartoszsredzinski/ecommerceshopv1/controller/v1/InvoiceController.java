@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.InvoiceDto;
 import pl.bartoszsredzinski.ecommerceshopv1.service.InvoiceService;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * created on 15.03.2022
  */
 
-@Controller
+@RestController
 @RequestMapping("/api/v1/invoices/{login}")
 @AllArgsConstructor
 @Slf4j

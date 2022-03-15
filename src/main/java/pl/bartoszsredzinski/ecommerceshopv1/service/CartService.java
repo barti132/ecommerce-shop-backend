@@ -174,7 +174,7 @@ public class CartService{
         invoice.setTotalItems(cart.getTotalItems());
         invoice.setTotalPriceGross(cart.getTotalPriceGross());
         invoice.setTotalPriceNet(cart.getTotalPriceNet());
-        invoice.setCartNumber(orderRequest.getCartNumber());
+        invoice.setCardNumber(orderRequest.getCardNumber());
         invoice.setCardName(orderRequest.getCardName());
 
         invoiceRepository.save(invoice);
