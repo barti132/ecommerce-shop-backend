@@ -2,6 +2,7 @@ package pl.bartoszsredzinski.ecommerceshopv1.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.UserAdminDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 
@@ -17,4 +18,5 @@ public interface UserMapper{
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     UserDto userToUserDto(User user);
+    UserAdminDto userToUserAdminDto(User user);
 }

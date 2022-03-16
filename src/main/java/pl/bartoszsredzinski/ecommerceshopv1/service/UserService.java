@@ -5,6 +5,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.PasswordDto;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.UserAdminDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.UserMapper;
@@ -13,6 +14,9 @@ import pl.bartoszsredzinski.ecommerceshopv1.model.User;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.AddressRepository;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.UserRepository;
 import pl.bartoszsredzinski.ecommerceshopv1.service.auth.AuthService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * User service
@@ -76,5 +80,17 @@ public class UserService{
         User user = authService.getCurrentUser(login);
         user.setPassword(passwordEncoder.encode(passwordDto.getPassword()));
         userRepository.save(user);
+    }
+
+    public List<UserAdminDto> getUserDataAdmin(){
+        List<User> userList = userRepository.findAll();
+
+
+        ArrayList<UserAdminDto> userArrayList = new ArrayList<>();
+        for(User u : userList){
+            userArrayList.add(userMapper.userToUserAdminDto(u));
+        }
+
+        return userArrayList;
     }
 }
