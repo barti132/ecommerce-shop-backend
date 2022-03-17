@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.PasswordDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserAdminDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.UserStatusRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.mapper.UserMapper;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
@@ -43,8 +44,12 @@ public class UserService{
     @Transactional
     public void addAddressToCurrentUser(String login, Address address){
         User user = authService.getCurrentUser(login);
-        Address add = Address.builder().address(address.getAddress()).city(address.getCity())
-                .country(address.getCountry()).postalCode(address.getPostalCode()).build();
+        Address add = Address.builder()
+                .address(address.getAddress())
+                .city(address.getCity())
+                .country(address.getCountry())
+                .postalCode(address.getPostalCode())
+                .build();
 
         addressRepository.save(add);
 
@@ -92,5 +97,14 @@ public class UserService{
         }
 
         return userArrayList;
+    }
+
+    @Transactional
+    public void changeUserStatus(UserStatusRequest userStatusRequest){
+        User user = userRepository.findById(userStatusRequest.getId())
+                .orElseThrow(() -> new InvalidIdException("User " + userStatusRequest.getId() + " not found."));
+
+        user.setEnabled(userStatusRequest.getStatus());
+        userRepository.save(user);
     }
 }

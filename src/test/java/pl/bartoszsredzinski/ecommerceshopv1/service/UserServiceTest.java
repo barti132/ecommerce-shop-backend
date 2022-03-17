@@ -9,6 +9,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.PasswordDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserDto;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.UserStatusRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.UserNotFoundException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Address;
 import pl.bartoszsredzinski.ecommerceshopv1.model.User;
@@ -94,5 +95,11 @@ class UserServiceTest{
     public void changePassword_should_change_user_password(){
         userService.changePassword("spring", new PasswordDto("haslo"));
         assertNotEquals("password", userRepository.findByLogin("spring").get().getPassword());
+    }
+
+    @Test
+    public void changeUserStatus_should_modify_user_enabled(){
+        userService.changeUserStatus(new UserStatusRequest(1L, false));
+        assertEquals(false, userRepository.findById(1L).get().isEnabled());
     }
 }

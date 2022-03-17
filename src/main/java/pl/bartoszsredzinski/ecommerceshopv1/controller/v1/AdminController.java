@@ -3,12 +3,12 @@ package pl.bartoszsredzinski.ecommerceshopv1.controller.v1;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserAdminDto;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.UserStatusRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -30,5 +30,11 @@ public class AdminController{
     public List<UserAdminDto> getUsersDataForAdmin(){
         log.info("GET admin/users");
         return userService.getUserDataAdmin();
+    }
+
+    @PutMapping("users/{id}/change-status")
+    public void changeUserStatus(@PathVariable Long id, @Valid @RequestBody UserStatusRequest userStatusRequest){
+        log.info("PUT admin/users/" + id + "/change-status");
+        userService.changeUserStatus(userStatusRequest);
     }
 }
