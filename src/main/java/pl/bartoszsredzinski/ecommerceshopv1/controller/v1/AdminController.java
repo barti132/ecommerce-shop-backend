@@ -6,6 +6,8 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserAdminDto;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.request.UserStatusRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Stock;
+import pl.bartoszsredzinski.ecommerceshopv1.service.StockService;
 import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
 
 import javax.validation.Valid;
@@ -25,6 +27,7 @@ import java.util.List;
 public class AdminController{
 
     private final UserService userService;
+    private final StockService stockService;
 
     @GetMapping("users")
     public List<UserAdminDto> getUsersDataForAdmin(){
@@ -36,5 +39,11 @@ public class AdminController{
     public void changeUserStatus(@PathVariable Long id, @Valid @RequestBody UserStatusRequest userStatusRequest){
         log.info("PUT admin/users/" + id + "/change-status");
         userService.changeUserStatus(userStatusRequest);
+    }
+
+    @GetMapping("stock")
+    public List<Stock> getShopStock(){
+        log.info("GET admin/stock");
+        return stockService.getWholeStock();
     }
 }

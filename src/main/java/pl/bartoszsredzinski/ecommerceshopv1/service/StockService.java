@@ -2,10 +2,12 @@ package pl.bartoszsredzinski.ecommerceshopv1.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Stock;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.ProductRepository;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.StockRepository;
+
+import java.util.List;
 
 /**
  * Stock service
@@ -21,6 +23,11 @@ public class StockService{
     private final ProductRepository productRepository;
 
     public Stock findByProductId(Long id){
-        return stockRepository.findByProduct(productRepository.getById(id)).orElse(null);
+        return stockRepository.findByProduct(productRepository.getById(id))
+                .orElseThrow(() -> new InvalidIdException("Product " + id + " not found"));
+    }
+
+    public List<Stock> getWholeStock(){
+        return (List<Stock>) stockRepository.findAll();
     }
 }
