@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserAdminDto;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.StockRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.request.UserStatusRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Stock;
 import pl.bartoszsredzinski.ecommerceshopv1.service.StockService;
@@ -45,5 +46,17 @@ public class AdminController{
     public List<Stock> getShopStock(){
         log.info("GET admin/stock");
         return stockService.getWholeStock();
+    }
+
+    @PutMapping("stock/{id}")
+    public void updateStock(@PathVariable Long id, @Valid @RequestBody StockRequest stockRequest){
+        log.info("PUT admin/stock/" + id);
+        stockService.updateStock(stockRequest);
+    }
+
+    @DeleteMapping("stock/{id}")
+    public void deleteStock(@PathVariable Long id){
+        log.info("DELETE admin/stock/" + id);
+        stockService.deleteStock(id);
     }
 }

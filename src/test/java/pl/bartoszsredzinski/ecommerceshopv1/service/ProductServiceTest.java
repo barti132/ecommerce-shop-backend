@@ -37,6 +37,7 @@ class ProductServiceTest{
                 .img("")
                 .priceNet(new BigDecimal(0))
                 .priceGross(new BigDecimal(5))
+                .available(true)
                 .build();
         Product product2 = Product.builder()
                 .category("category2")
@@ -46,6 +47,7 @@ class ProductServiceTest{
                 .img("")
                 .priceNet(new BigDecimal(0))
                 .priceGross(new BigDecimal(10))
+                .available(true)
                 .build();
         Product product3 = Product.builder()
                 .category("category3")
@@ -55,6 +57,7 @@ class ProductServiceTest{
                 .img("")
                 .priceNet(new BigDecimal(0))
                 .priceGross(new BigDecimal(15))
+                .available(true)
                 .build();
 
         productRepository.save(product1);
