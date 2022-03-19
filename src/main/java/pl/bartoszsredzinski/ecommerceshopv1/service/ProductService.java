@@ -3,6 +3,7 @@ package pl.bartoszsredzinski.ecommerceshopv1.service;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.request.ProductRequest;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.InvalidIdException;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Stock;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.ProductRepository;
@@ -84,6 +85,25 @@ public class ProductService{
     @Transactional
     public void createNewProduct(ProductRequest productRequest){
         Product product = new Product();
+        product = productRepository.save(setProductProperties(product, productRequest));
+
+        Stock stock = new Stock();
+        stock.setAmount(0);
+        stock.setProduct(product);
+        stock.setUpdatedDate(new Date(System.currentTimeMillis()));
+
+        stockRepository.save(stock);
+    }
+
+    @Transactional
+    public void updateProduct(Long id, ProductRequest productRequest){
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new InvalidIdException("Product " + id + " not found"));
+        product = setProductProperties(product, productRequest);
+        productRepository.save(product);
+    }
+
+    private Product setProductProperties(Product product, ProductRequest productRequest){
         product.setName(productRequest.getName());
         product.setProducerName(productRequest.getProducerName());
         product.setCategory(productRequest.getCategory());
@@ -96,15 +116,12 @@ public class ProductService{
 
         product.setPriceGross(priceGross);
         product.setAvailable(true);
-        product.setImg("http://localhost:8080/api/v1/image/" + productRequest.getImgName());
-
-        product = productRepository.save(product);
-
-        Stock stock = new Stock();
-        stock.setAmount(0);
-        stock.setProduct(product);
-        stock.setUpdatedDate(new Date(System.currentTimeMillis()));
-
-        stockRepository.save(stock);
+        if(productRequest.getImgName().contains("api/v1")){
+            product.setImg(productRequest.getImgName());
+        }
+        else{
+            product.setImg("http://localhost:8080/api/v1/image/" + productRequest.getImgName());
+        }
+        return product;
     }
 }

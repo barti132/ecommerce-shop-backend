@@ -134,4 +134,12 @@ class ProductServiceTest{
         assertEquals(new BigDecimal("12.30"), productRepository.findById(4L).get().getPriceGross());
         assertEquals(1, ((List<Stock>)stockRepository.findAll()).size());
     }
+
+    @Test
+    public void updateProduct_should_change_product_properties(){
+        productService.updateProduct( 1L,
+                new ProductRequest("newCategory", "newProducer", "newName", new BigDecimal("10"), "description", "img.jpg"));
+        assertEquals(3, productRepository.findAll().size());
+        assertEquals(new BigDecimal("12.30"), productRepository.findById(1L).get().getPriceGross());
+    }
 }

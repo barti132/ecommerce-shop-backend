@@ -66,15 +66,21 @@ public class AdminController{
         stockService.deleteStock(id);
     }
 
-    @PostMapping("image/upload")
+    @PostMapping("image")
     public void uploadImage(@RequestParam(value = "image") MultipartFile image){
-        log.info("POST admin/image/upload");
+        log.info("POST admin/image");
         imageService.saveImage(image);
     }
 
-    @PostMapping("products/new")
+    @PostMapping("products")
     public void createNewProduct(@Valid @RequestBody ProductRequest productRequest){
-        log.info("POST admin/products/new");
+        log.info("POST admin/products");
         productService.createNewProduct(productRequest);
+    }
+
+    @PutMapping("products/{id}")
+    public void updateProductData(@PathVariable Long id, @Valid @RequestBody ProductRequest productRequest){
+        log.info("PUT admin/products/" + id);
+        productService.updateProduct(id, productRequest);
     }
 }
