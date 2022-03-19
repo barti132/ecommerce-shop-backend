@@ -5,12 +5,13 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.FileOperationException;
+import pl.bartoszsredzinski.ecommerceshopv1.exception.IllegalExtensionException;
 import pl.bartoszsredzinski.ecommerceshopv1.exception.ImageNotFoundException;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,8 +32,7 @@ public class ImageService{
     public byte[] getImageFromServer(String name){
         try{
             return FileUtils.readFileToByteArray(new File(FILE_PATH_ROOT + name));
-        }
-        catch(IOException e){
+        }catch(IOException e){
             throw new ImageNotFoundException("Reading file error");
         }
     }
@@ -41,17 +41,17 @@ public class ImageService{
 
         String extension = FilenameUtils.getExtension(image.getOriginalFilename());
         if(!extension.equals("jpg")){
-            throw new RuntimeException("Illegal file extension!");
+            throw new IllegalExtensionException("Illegal file extension!");
         }
 
-        Path uploadPath = Paths.get(FILE_PATH_ROOT + image.getOriginalFilename());
+        Path uploadPath = Paths.get(FILE_PATH_ROOT);
 
         try(InputStream inputStream = image.getInputStream()){
             Path filePath = uploadPath.resolve(StringUtils.cleanPath(image.getOriginalFilename()));
             Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
         }catch(IOException e){
             e.printStackTrace();
-            throw new RuntimeException("Could not save file");
+            throw new FileOperationException("Could not save file");
         }
     }
 }

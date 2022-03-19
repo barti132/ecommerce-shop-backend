@@ -1,5 +1,9 @@
 package pl.bartoszsredzinski.ecommerceshopv1.dto.request;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -10,6 +14,9 @@ import java.math.BigDecimal;
  * @author Bartosz Średziński
  * created on 19.03.2022
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductRequest{
 
     @NotBlank
@@ -22,7 +29,7 @@ public class ProductRequest{
     private String name;
 
     @NotNull
-    private BigDecimal priceGross;
+    private BigDecimal priceNet;
 
     @NotBlank
     private String description;

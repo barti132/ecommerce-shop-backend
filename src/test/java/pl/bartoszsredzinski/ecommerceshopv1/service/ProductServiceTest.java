@@ -7,8 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.ProductRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Product;
+import pl.bartoszsredzinski.ecommerceshopv1.model.Stock;
 import pl.bartoszsredzinski.ecommerceshopv1.repository.ProductRepository;
+import pl.bartoszsredzinski.ecommerceshopv1.repository.StockRepository;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,6 +26,9 @@ class ProductServiceTest{
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private StockRepository stockRepository;
 
     @Autowired
     private ProductService productService;
@@ -117,5 +123,15 @@ class ProductServiceTest{
     public void findById_should_return_null(){
         assertNull(productService.findById(-1L));
         assertNull(productService.findById(4L));
+    }
+
+    @Test
+    public void createNewProduct_should_add_new_product(){
+        productService.createNewProduct(
+                new ProductRequest("newCategory", "newProducer", "newName", new BigDecimal("10"), "description", "img.jpg"));
+
+        assertEquals(4, productRepository.findAll().size());
+        assertEquals(new BigDecimal("12.30"), productRepository.findById(4L).get().getPriceGross());
+        assertEquals(1, ((List<Stock>)stockRepository.findAll()).size());
     }
 }

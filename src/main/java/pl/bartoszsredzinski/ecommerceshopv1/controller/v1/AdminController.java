@@ -11,6 +11,7 @@ import pl.bartoszsredzinski.ecommerceshopv1.dto.request.StockRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.request.UserStatusRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Stock;
 import pl.bartoszsredzinski.ecommerceshopv1.service.ImageService;
+import pl.bartoszsredzinski.ecommerceshopv1.service.ProductService;
 import pl.bartoszsredzinski.ecommerceshopv1.service.StockService;
 import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
 
@@ -33,6 +34,7 @@ public class AdminController{
     private final UserService userService;
     private final StockService stockService;
     private final ImageService imageService;
+    private final ProductService productService;
 
     @GetMapping("users")
     public List<UserAdminDto> getUsersDataForAdmin(){
@@ -73,6 +75,6 @@ public class AdminController{
     @PostMapping("products/new")
     public void createNewProduct(@Valid @RequestBody ProductRequest productRequest){
         log.info("POST admin/products/new");
-
+        productService.createNewProduct(productRequest);
     }
 }
