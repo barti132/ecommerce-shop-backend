@@ -4,10 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.UserAdminDto;
+import pl.bartoszsredzinski.ecommerceshopv1.dto.request.ProductRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.request.StockRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.dto.request.UserStatusRequest;
 import pl.bartoszsredzinski.ecommerceshopv1.model.Stock;
+import pl.bartoszsredzinski.ecommerceshopv1.service.ImageService;
 import pl.bartoszsredzinski.ecommerceshopv1.service.StockService;
 import pl.bartoszsredzinski.ecommerceshopv1.service.UserService;
 
@@ -29,6 +32,7 @@ public class AdminController{
 
     private final UserService userService;
     private final StockService stockService;
+    private final ImageService imageService;
 
     @GetMapping("users")
     public List<UserAdminDto> getUsersDataForAdmin(){
@@ -58,5 +62,17 @@ public class AdminController{
     public void deleteStock(@PathVariable Long id){
         log.info("DELETE admin/stock/" + id);
         stockService.deleteStock(id);
+    }
+
+    @PostMapping("image/upload")
+    public void uploadImage(@RequestParam(value = "image") MultipartFile image){
+        log.info("POST admin/image/upload");
+        imageService.saveImage(image);
+    }
+
+    @PostMapping("products/new")
+    public void createNewProduct(@Valid @RequestBody ProductRequest productRequest){
+        log.info("POST admin/products/new");
+
     }
 }
