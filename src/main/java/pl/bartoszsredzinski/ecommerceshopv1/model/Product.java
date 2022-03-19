@@ -4,7 +4,10 @@ package pl.bartoszsredzinski.ecommerceshopv1.model;
 import com.sun.istack.NotNull;
 import lombok.*;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
@@ -50,4 +53,7 @@ public class Product implements Serializable{
 
     @NotNull
     private BigDecimal priceGross;
+
+    @NotNull
+    private Boolean available;
 }
