@@ -19,3 +19,4 @@ I am creating online shop, based on angular and spring boot. (Work in progess)
 
 ## Usage
 You need JDK 17 or higher(previous versions are not tested).  
+
