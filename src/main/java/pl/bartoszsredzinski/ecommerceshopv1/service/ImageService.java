@@ -27,7 +27,7 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class ImageService{
 
-    private static final String FILE_PATH_ROOT = "src\\main\\resources\\images\\";
+    private static final String FILE_PATH_ROOT = "src/main/resources/images/";
 
     public byte[] getImageFromServer(String name){
         try{
