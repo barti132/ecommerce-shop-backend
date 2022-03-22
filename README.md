@@ -33,7 +33,7 @@ the user's account.
 
 Service is documented by swagger.
 
-##Preview
+## Preview
 http://ecommerce.api.bartoszsredzinski.pl/swagger-ui/#/
 
 ## Technologies
