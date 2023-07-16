@@ -6,7 +6,6 @@ Preview: http://ecommerce.api.bartoszsredzinski.pl/swagger-ui/#/
 
 ## Table of contents
 * [Description](#description)
-* [Preview](#preview)
 * [Technologies](#technologies)
 * [Screenshots](#screenshots)
 
@@ -32,9 +31,6 @@ email with token to the given user's email. When user clicked the link with toke
 the user's account. 
 
 Service is documented by swagger.
-
-## Preview
-http://ecommerce.api.bartoszsredzinski.pl/swagger-ui/#/
 
 ## Technologies
 * Java 17
